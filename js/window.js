@@ -159,7 +159,7 @@ class OSWindow {
 
 	refresh() {
 		this.window.style.width = `${this.width}px`;
-		this.window.style.height = `calc(${this.height}px + 2.1rem)`;
+		this.window.style.height = `calc(${this.height}px + 2rem)`;
 
 		if (this.iscentered === true) {
 			this.window.style.left = "50%";

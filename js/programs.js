@@ -239,7 +239,7 @@ const OSFunctions = {
 			`<p class="ui-window-text">Are you sure you want to clear the localStorage?</p>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">yes</button><button class="ui-window-button" data-window="${_id}">no</button></div>`,
 			300,
-			150,
+			100,
 			2,
 			(important = true),
 			(iscentered = true),
@@ -302,7 +302,7 @@ const OSFunctions = {
 			`<p class="ui-window-text">Are you sure you want to exit? All unsaved data will be lost.</p>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">yes</button><button class="ui-window-button" data-window="${_id}">no</button></div>`,
 			300,
-			75,
+			100,
 			2,
 			(important = true),
 			(iscentered = true),
