@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>onespark ~ ui</title>
+
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
+
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+		<style>
+			.material-symbols-sharp {
+				font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 200, "opsz" 48;
+				vertical-align: text-bottom;
+			}
+		</style>
+
+		<link rel="stylesheet" href="/css/index.css" />
+		<link rel="stylesheet" href="/css/ui.css" />
+		<link rel="stylesheet" href="/css/patches.css" />
+	</head>
+	<body class="crt">
+		<header>
+			<span class="logo">onespark ui v1</span>
+			<div class="nav">
+				<span class="nav-item dropdown" id="file-dropdown">
+					file
+					<div class="dropdown-options">
+						<a href="#">new file</a>
+						<a href="#">open file</a>
+						<a href="#" onclick="OSPrograms.launcher()">run program</a>
+						<a href="#" onclick="OSFunctions.clearStorage()">clear storage</a>
+						<a href="#">exit</a>
+					</div>
+				</span>
+				<span class="nav-item dropdown" id="edit-dropdown">
+					edit
+					<div class="dropdown-options">
+						<a href="#">undo</a>
+						<a href="#">redo</a>
+						<a href="#">cut</a>
+						<a href="#">copy</a>
+						<a href="#">paste</a>
+					</div>
+				</span>
+				<span class="nav-item dropdown" id="view-dropdown">
+					view
+					<div class="dropdown-options">
+						<a href="#">hide windows</a>
+						<a href="#">show windows</a>
+					</div>
+				</span>
+				<span class="nav-item dropdown" id="help-dropdown">
+					help
+					<div class="dropdown-options">
+						<a href="#">how-to</a>
+						<a href="#">readme</a>
+						<a href="#">source code</a>
+					</div>
+				</span>
+			</div>
+		</header>
+		<main>
+            <!--
+                We use javascript to create the workspace.
+                This is because we want to be able to 
+                create windows dynamically.
+            -->
+        </main>
+		<footer id="taskbar">
+            <div class="taskbar-item" id="taskbar-home">
+                <span class="taskbar-item-icon material-symbols-sharp">menu</span>
+            </div>
+
+			<!-- 
+                We use javascript to create the taskbar.
+                This is because we want to be able to 
+                create windows dynamically.
+            -->
+            
+		</footer>
+	</body>
+	<script src="/js/window.js"></script>
+	<script src="/js/dropdown.js"></script>
+    <script src="/js/taskbar.js"></script>
+	<script src="/js/programs.js"></script>
+	<script src="/js/boot.js"></script>
+</html>

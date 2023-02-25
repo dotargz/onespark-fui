@@ -1,0 +1,229 @@
+* {
+	box-sizing: border-box;
+    text-transform: uppercase;
+
+    font-family: "JetBrains Mono", monospace;
+    filter: grayscale(10%);
+}
+
+html,
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: "JetBrains Mono", monospace;
+	color: #fff;
+	background-color: #000;
+
+    overflow: hidden;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+
+	/* design guide */
+	padding: 1rem;
+}
+
+header {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-bottom: 2rem;
+
+    user-select: none;
+}
+
+header > .logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* design guide CRT */
+    background-color: #fff;
+    color: #000;
+
+    padding: 0.2rem;
+    margin-right: 2rem;
+
+    cursor: pointer;
+}
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+
+}
+
+.nav > .nav-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* design guide CRT */
+    background-color: #000;
+    color: #fff;
+
+    padding: 0.2rem;
+    margin-right: 1rem;
+}
+
+.nav > .nav-item:hover {
+    cursor: pointer;
+
+    /* design guide CRT */
+    background-color: #fff;
+    color: #000;
+
+    transition: 0.2s;
+}
+
+/* Hide the dropdown options by default */
+.dropdown .dropdown-options {
+	display: none;
+}
+
+.dropdown {
+    position: relative;
+}
+
+/* Show the dropdown options when the dropdown is active */
+.dropdown.active .dropdown-options {
+	display: flex;
+    flex-direction: column;
+	position: absolute;
+
+    left: 0;
+    top: 100%;
+
+	background-color: #000;
+    color: #fff;
+	min-width: 160px;
+	z-index: 1;
+
+    /* design guide CRT */
+	border-top: #fff 4px solid;
+	border-bottom: #fff 4px solid;
+	border-left: #fff 2px solid;
+	border-right: #fff 2px solid;
+
+    margin: 0.2rem 0 0 0;
+}
+
+/* Style the dropdown options links */
+.dropdown .dropdown-options a {
+    padding: 0.2rem;
+	text-decoration: none;
+    color: #fff;
+	display: block;
+}
+
+/* Change the background color of the options on hover */
+.dropdown .dropdown-options a:hover {
+	background-color: #fff;
+    color: #000;
+}
+
+main {
+	width: 100%;
+    margin-bottom: auto;
+    margin-top: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+/* aka taskbar */
+footer {
+    width: 100%;
+    min-height: 3rem;
+    max-height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 2rem;
+
+    /* design guide CRT */
+    border-top: #777 4px solid;
+    border-bottom: #777 4px solid;
+    border-left: #777 2px solid;
+    border-right: #777 2px solid;
+    padding: 0.5rem;
+
+    z-index: -100;
+
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+
+    user-select: none;
+}
+
+footer > .taskbar-item {
+    width: max-content;
+    height: max-content;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    /* design guide CRT */
+    border-top: #fff 4px solid;
+    border-bottom: #fff 4px solid;
+    border-left: #fff 2px solid;
+    border-right: #fff 2px solid;
+    padding: 0.5rem;
+
+    padding: 0.2rem;
+    
+
+    white-space: nowrap;
+    
+}
+
+footer > .taskbar-item:hover {
+    cursor: pointer;
+
+    /* design guide CRT */
+    background-color: #fff;
+    color: #000;
+
+    transition: 0.2s;
+}
+
+footer > .taskbar-item.minimized {
+    /* design guide CRT */
+    border-top: #777 4px solid;
+    border-bottom: #777 4px solid;
+    border-left: #777 2px solid;
+    border-right: #777 2px solid;
+
+    color: #777;
+
+    transition: 0.2s;
+}
+
+footer > .taskbar-item.minimized:hover {
+    /* design guide CRT */
+    background-color: #777;
+
+    color: #000;
+
+    transition: 0.2s;
+}

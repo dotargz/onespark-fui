@@ -1,0 +1,178 @@
+div.ui-window-draggable {
+	width: 50vmin;
+    min-width: 20rem;
+    min-height: 10rem;
+    position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+
+	background-color: #000;
+	color: #fff;
+
+	/* design guide CRT */
+	border-top: #fff 4px solid;
+	border-bottom: #fff 4px solid;
+	border-left: #fff 2px solid;
+	border-right: #fff 2px solid;
+
+    overflow: hidden;
+
+}
+
+div.ui-window-draggable.latest {
+    z-index: 100;
+}
+
+div.ui-window-draggable.minimized {
+    display: none;
+}
+
+div.ui-window-draggable > .ui-window-titlebar {
+	width: 100%;
+    min-height: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+
+	background-color: #000;
+	color: #fff;
+
+	/* design guide CRT */
+	border-bottom: #fff 4px solid;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+
+    cursor: move;
+    position: relative;
+    user-select: none;
+}
+
+div.ui-window-draggable > .ui-window-titlebar > .ui-window-title
+ {
+    height: max-content;
+	font-weight: bolder;
+    overflow-x: hidden;
+
+    margin-right: 1rem;
+}
+
+div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
+    width: 20%;
+    min-width: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-left: auto;
+}
+
+.ui-window-control:hover {
+    cursor: pointer;
+
+    /* design guide CRT */
+    background-color: #fff;
+    color: #000;
+
+    transition: 0.2s;
+}
+
+div.ui-window-draggable > .ui-window-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* padding: 0.5rem; */
+
+    gap: 0.5rem;
+
+    overflow: hidden;
+}
+
+.ui-window-content > p.ui-window-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ui-window-content > .ui-window-textarea {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* design guide CRT */
+    background-color: #000;
+    color: #fff;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+
+    text-transform: none;
+
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    resize: none;
+}
+
+div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-top: auto;
+}
+
+.ui-window-button {
+    width: 10rem;
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 0.5rem;
+
+    background-color: #000;
+    color: #fff;
+    font-weight: bolder;
+    
+    text-transform: uppercase;
+
+    /* design guide CRT */
+    border-top: #fff 4px solid;
+    border-bottom: #fff 4px solid;
+    border-left: #fff 2px solid;
+    border-right: #fff 2px solid;
+    background-color: #fff;
+    color: #000;
+}
+
+.ui-window-button:hover {
+    cursor: pointer;
+
+    /* design guide CRT */
+    background-color: #000;
+    color: #fff;
+
+    transition: 0.2s;
+}
