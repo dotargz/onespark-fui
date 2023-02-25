@@ -1,6 +1,6 @@
 /*
 
-Window Manager for the OS
+Window Manager for the OS. A core part of the OS.
 Copyright (C) 2023  BlueSkye
 
 This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
 
+// Core functions
 function makeDraggable(element) {
 	let currentPosX = 0,
 		currentPosY = 0,
@@ -76,8 +77,13 @@ function makeDraggable(element) {
 	}
 }
 
+function randomId() {
+	const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
+	return uint32.toString(16);
+}
+
 class OSWindow {
-	constructor(id, title, content, width, height, z = 1, important = false, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
+	constructor(id, title, content, width, height, z = 1, error = false, important = false, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
 		this.window = document.createElement("div");
 		this.id = id;
 		this.title = title;
@@ -85,6 +91,7 @@ class OSWindow {
 		this.width = width;
 		this.height = height;
 		this.z = z;
+		this.error = error;
 		this.important = important;
 		this.iscentered = iscentered;
 		this.padding = padding;
@@ -196,17 +203,33 @@ class OSWindow {
 		<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
 		`;
 
-		if (this.important == true) {
+		// a window can be important, which means it can't be minimized or maximized. a window cannot have both important and error classes, but it can have the value set to true for both
+		if (this.important == true && this.error == false) {
 			this.window.classList.add("important");
 			controls_available = `
 			<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}" style="display:none;">remove</span>
 			<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}" style="display:none;">fullscreen</span>
 			<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
 			`;
-		} else if (this.important == false) {
+		} else if (this.important == false && this.error == false) {
 			this.window.classList.remove("important");
+			this.window.classList.remove("error");
+		} else if (this.important == false && this.error == true) {
+			this.window.classList.add("error");
+			controls_available = `
+			<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}" style="display:none;">remove</span>
+			<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}">fullscreen</span>
+			<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
+			`;
+		} else if (this.important == true && this.error == true) {
+			this.window.classList.add("error");
+			controls_available = `
+			<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}" style="display:none;">remove</span>
+			<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}" style="display:none;">fullscreen</span>
+			<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}" style="display:none;">close</span>
+			`;
 		} else {
-			throw new Error("important must be a boolean value");
+			throw new Error("important and error must be boolean values");
 		}
 
 		this.window.innerHTML = `
@@ -287,6 +310,14 @@ class OSWindow {
 			if (window.id === id) {
 				window.destroy();
 				break;
+			}
+		}
+	}
+
+	static destroyAllWindows() {
+		for (let window of OSWindow.windows) {
+			if (window.important == false && window.error == false) {
+				window.destroy();
 			}
 		}
 	}

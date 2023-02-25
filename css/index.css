@@ -303,6 +303,18 @@ footer > .taskbar-item.important {
 	animation: strobe 1s infinite;
 }
 
+footer > .taskbar-item.error {
+	/* design guide CRT */
+	--window-status-color: #f00;
+
+	color: var(--window-status-color);
+
+	transition: 0.2s;
+
+	/* strobe slow */
+	animation: strobe 1s infinite;
+}
+
 @keyframes strobe {
 	0% {
 		border-top: var(--window-status-color) 4px solid;
@@ -326,7 +338,7 @@ footer > .taskbar-item.important {
 	}
 }
 
-footer > .taskbar-item.important:hover {
+footer > .taskbar-item.important:hover, footer > .taskbar-item.error:hover {
 	/* do not strobe on hover */
     animation: none;
 

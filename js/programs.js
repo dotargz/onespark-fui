@@ -1,8 +1,3 @@
-function randomId() {
-	const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
-	return uint32.toString(16);
-}
-
 const OSPrograms = {
 	welcome: function (x = 0, y = 0) {
 		// create a new window with the new OSWindow class
@@ -15,6 +10,7 @@ const OSPrograms = {
 			300,
 			175,
 			2,
+            (error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -53,6 +49,7 @@ const OSPrograms = {
 			500,
 			350,
 			2,
+            (error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -93,10 +90,20 @@ const OSPrograms = {
                 <li>added 'changelog' program</li>
                 <li>added 'about' program</li>
             </ul>
+            <p class="ui-window-text">
+            0.3.0: added error handling:
+            </p>
+            <ul class="ui-window-text">
+                <li>added error windows</li>
+                <li>added error handling system</li>
+                <li>added 'debug' program</li>
+                <li>various bug fixes</li>
+            </ul>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
-			375,
+			485,
 			2,
+            (error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -109,6 +116,51 @@ const OSPrograms = {
 			OSWindow.destroyWindowById(_id);
 		});
 	},
+
+    debug: function (x = 0, y = 0) {
+        let _id = randomId();
+        this.debug.self = new OSWindow(
+            _id,
+            "Debug Options",
+            `<div class="ui-window-row">
+                <button class="ui-window-button throw-error-button" data-window="${_id}">Throw Error</button>
+                <button class="ui-window-button throw-long-error-button" data-window="${_id}">Throw Long Error</button>
+                <button class="ui-window-button close-all-button" data-window="${_id}">Close All Windows</button>
+                <button class="ui-window-button relaunch-button" data-window="${_id}">Relaunch OS</button>
+            </div>
+            <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
+            375,
+            150,
+            2,
+            (error = false),
+            (important = false),
+            (iscentered = true),
+            (padding = true),
+            (resizeable = false),
+            (x = x),
+            (y = y)
+        );
+
+        this.debug.self.window.querySelector(".ui-window-buttons > .ui-window-button").addEventListener("click", () => {
+            OSWindow.destroyWindowById(_id);
+        });
+
+        this.debug.self.window.querySelector(".throw-error-button").addEventListener("click", () => {
+            throw new Error("This is a test error.");
+        });
+
+        this.debug.self.window.querySelector(".throw-long-error-button").addEventListener("click", () => {
+            throw new Error("This is a long test error. It really is a long test error. It's so long that even the longest of test errors are jealous of it");
+        });
+
+        this.debug.self.window.querySelector(".close-all-button").addEventListener("click", () => {
+            OSWindow.destroyAllWindows();
+        });
+
+        this.debug.self.window.querySelector(".relaunch-button").addEventListener("click", () => {
+            location.reload();
+        });
+    },
 
 	about: function (x = 0, y = 0) {
 		let _id = randomId();
@@ -141,6 +193,7 @@ const OSPrograms = {
 			520,
 			410,
 			2,
+            (error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -156,7 +209,7 @@ const OSPrograms = {
 
 	textEditor: function (x = 0, y = 0) {
 		let _id = randomId();
-		this.textEditor.self = new OSWindow(_id, "text editor", `<textarea class="ui-window-textarea" data-window="${_id}"></textarea>`, 300, 210, 2, (important = false), (iscentered = true), (padding = true), (resizeable = true), (x = x), (y = y));
+		this.textEditor.self = new OSWindow(_id, "text editor", `<textarea class="ui-window-textarea" data-window="${_id}" placeholder="TYPE HERE..."></textarea>`, 300, 210, 2, (error = false), (important = false), (iscentered = true), (padding = true), (resizeable = true), (x = x), (y = y));
 
 		this.textEditor.self.window.querySelector(".ui-window-textarea").addEventListener("input", () => {
 			localStorage.setItem("textEditor-" + _id, this.textEditor.self.window.querySelector(".ui-window-textarea").value);
@@ -177,6 +230,7 @@ const OSPrograms = {
 			632,
 			405,
 			2,
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = false),
@@ -196,12 +250,13 @@ const OSPrograms = {
             <p class="ui-window-text">welcome! <button class="ui-window-button launch-welcome">launch</button></p>
             <p class="ui-window-text">doom: 1993<button class="ui-window-button launch-doom">launch</button></p>
             <p class="ui-window-text">text editor <button class="ui-window-button launch-txt">launch</button></p>
-            <p class="ui-window-text">about <button class="ui-window-button launch-about">launch</button></p>
+            <p class="ui-window-text">debug <button class="ui-window-button launch-debug">launch</button></p>
             </div>
             `,
 			375,
 			150,
 			2,
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -222,10 +277,9 @@ const OSPrograms = {
 			OSPrograms.textEditor();
 		});
 
-        this.launcher.self.window.querySelector(".launch-about").addEventListener("click", () => {
-            OSPrograms.about();
-        });
-
+		this.launcher.self.window.querySelector(".launch-debug").addEventListener("click", () => {
+			OSPrograms.debug();
+		});
 	},
 };
 
@@ -241,6 +295,7 @@ const OSFunctions = {
 			300,
 			100,
 			2,
+			(error = false),
 			(important = true),
 			(iscentered = true),
 			(padding = true)
@@ -304,6 +359,7 @@ const OSFunctions = {
 			300,
 			100,
 			2,
+            (error = false),
 			(important = true),
 			(iscentered = true),
 			(padding = true)

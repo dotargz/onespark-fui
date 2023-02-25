@@ -11,7 +11,7 @@ document.addEventListener("OSWindowCreated", (e) => {
 	taskbarItem.addEventListener("click", () => {
         // cannot minimize important windows
         if (window.important === true) return;
-        
+
 		window.window.classList.toggle("minimized");
 
         // trigger window minimized event
@@ -22,9 +22,17 @@ document.addEventListener("OSWindowCreated", (e) => {
         }
 	});
 
-    // add support for important windows 
-    if (window.important === true) {
+    // add support for important windows and error windows. a window cannot have both important and error classes, but it can have the value set to true for both
+    if (window.important == true && window.error == false) {
         taskbarItem.classList.add("important");
+    } else if (window.important == false && window.error == false) {
+        taskbarItem.classList.remove("important");
+        taskbarItem.classList.remove("error");
+    } else if (window.important == false && window.error == true) {
+        taskbarItem.classList.add("error");
+    } else if (window.important == true && window.error == true) {
+        // prioritize error over important
+        taskbarItem.classList.add("error");
     }
 
 });

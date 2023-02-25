@@ -35,6 +35,13 @@ div.ui-window-draggable.important {
 	--window-color: #ff0;
 }
 
+div.ui-window-draggable.error {
+	z-index: 2000;
+
+	/* design guide CRT dark yellow */
+	--window-color: #f00;
+}
+
 div.ui-window-draggable > .ui-window-titlebar {
 	width: 100%;
 	height: 2rem;
