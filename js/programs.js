@@ -192,12 +192,15 @@ const OSPrograms = {
 			_id,
 			"run program",
 			`
+            <div class="ui-window-row">
             <p class="ui-window-text">welcome! <button class="ui-window-button launch-welcome">launch</button></p>
             <p class="ui-window-text">doom: 1993<button class="ui-window-button launch-doom">launch</button></p>
-            <p class="ui-window-text">text editor <button class="ui-window-button launch-calc">launch</button></p>
+            <p class="ui-window-text">text editor <button class="ui-window-button launch-txt">launch</button></p>
+            <p class="ui-window-text">about <button class="ui-window-button launch-about">launch</button></p>
+            </div>
             `,
-			300,
-			175,
+			375,
+			150,
 			2,
 			(important = false),
 			(iscentered = true),
@@ -215,9 +218,14 @@ const OSPrograms = {
 			OSPrograms.doom();
 		});
 
-		this.launcher.self.window.querySelector(".launch-calc").addEventListener("click", () => {
+		this.launcher.self.window.querySelector(".launch-txt").addEventListener("click", () => {
 			OSPrograms.textEditor();
 		});
+
+        this.launcher.self.window.querySelector(".launch-about").addEventListener("click", () => {
+            OSPrograms.about();
+        });
+
 	},
 };
 

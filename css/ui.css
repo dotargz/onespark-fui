@@ -102,6 +102,23 @@ div.ui-window-draggable > .ui-window-content {
 	overflow: hidden;
 }
 
+.ui-window-content > div.ui-window-row {
+    width: 100%;
+    height: max-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    /* padding: 0.5rem; */
+
+    gap: 1rem;
+
+    flex-wrap: wrap;
+
+    overflow: hidden;
+}
+
 .ui-window-content > p.ui-window-text {
 	width: 100%;
 	height: max-content;
@@ -111,6 +128,11 @@ div.ui-window-draggable > .ui-window-content {
 	outline: none;
 	padding: 0;
 	margin: 0;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 
 .ui-window-content > .ui-window-textarea, .ui-window-content > .ui-window-iframe {
