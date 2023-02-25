@@ -1,9 +1,18 @@
 * {
 	box-sizing: border-box;
-    text-transform: uppercase;
+	text-transform: uppercase;
 
-    font-family: "JetBrains Mono", monospace;
-    filter: grayscale(10%);
+	font-family: "JetBrains Mono", monospace;
+	filter: grayscale(10%);
+
+    /* make everythign fade in and out */
+    animation: fadeIn 0.2s;
+}
+
+:root {
+	--window-color: #fff;
+	--window-background-color: #000;
+	--window-status-color: #fff;
 }
 
 html,
@@ -13,10 +22,10 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: "JetBrains Mono", monospace;
-	color: #fff;
-	background-color: #000;
+	color: var(--window-color);
+	background-color: var(--window-background-color);
 
-    overflow: hidden;
+	overflow: hidden;
 }
 
 body {
@@ -29,6 +38,22 @@ body {
 	padding: 1rem;
 }
 
+ul {
+    list-style: square;
+    margin: 0;
+    margin-left: 1.5rem;
+    padding: 0;
+}
+
+a {
+    display: inline-block;
+    color: var(--window-color);
+}
+
+a:hover {
+    cursor: pointer;
+}
+
 header {
 	width: 100%;
 	display: flex;
@@ -37,58 +62,57 @@ header {
 	align-items: center;
 	margin-bottom: 2rem;
 
-    user-select: none;
+	user-select: none;
 }
 
 header > .logo {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
-    /* design guide CRT */
-    background-color: #fff;
-    color: #000;
+	/* design guide CRT */
+	background-color: var(--window-color);
+	color: var(--window-background-color);
 
-    padding: 0.2rem;
-    margin-right: 2rem;
+	padding: 0.2rem;
+	margin-right: 2rem;
 
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
-    margin: 0;
-    padding: 0;
-
+	margin: 0;
+	padding: 0;
 }
 
 .nav > .nav-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
-    /* design guide CRT */
-    background-color: #000;
-    color: #fff;
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 
-    padding: 0.2rem;
-    margin-right: 1rem;
+	padding: 0.2rem;
+	margin-right: 1rem;
 }
 
 .nav > .nav-item:hover {
-    cursor: pointer;
+	cursor: pointer;
 
-    /* design guide CRT */
-    background-color: #fff;
-    color: #000;
+	/* design guide CRT */
+	background-color: var(--window-color);
+	color: var(--window-background-color);
 
-    transition: 0.2s;
+	transition: 0.2s;
 }
 
 /* Hide the dropdown options by default */
@@ -97,133 +121,235 @@ header > .logo {
 }
 
 .dropdown {
-    position: relative;
+	position: relative;
 }
 
 /* Show the dropdown options when the dropdown is active */
 .dropdown.active .dropdown-options {
 	display: flex;
-    flex-direction: column;
+	flex-direction: column;
 	position: absolute;
 
-    left: 0;
-    top: 100%;
+	left: 0;
+	top: 100%;
 
-	background-color: #000;
-    color: #fff;
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 	min-width: 160px;
 	z-index: 1;
 
-    /* design guide CRT */
-	border-top: #fff 4px solid;
-	border-bottom: #fff 4px solid;
-	border-left: #fff 2px solid;
-	border-right: #fff 2px solid;
+	/* design guide CRT */
+	border-top: var(--window-color) 4px solid;
+	border-bottom: var(--window-color) 4px solid;
+	border-left: var(--window-color) 2px solid;
+	border-right: var(--window-color) 2px solid;
 
-    margin: 0.2rem 0 0 0;
+	margin: 0.2rem 0 0 0;
 }
 
 /* Style the dropdown options links */
 .dropdown .dropdown-options a {
-    padding: 0.2rem;
+	padding: 0.2rem;
 	text-decoration: none;
-    color: #fff;
+	color: var(--window-color);
 	display: block;
 }
 
 /* Change the background color of the options on hover */
 .dropdown .dropdown-options a:hover {
-	background-color: #fff;
-    color: #000;
+	background-color: var(--window-color);
+	color: var(--window-background-color);
+}
+
+.context-menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: max-content;
+	height: max-content;
+	z-index: 1000;
+
+	display: none;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+	border-top: var(--window-color) 4px solid;
+	border-bottom: var(--window-color) 4px solid;
+	border-left: var(--window-color) 2px solid;
+	border-right: var(--window-color) 2px solid;
+}
+
+.context-menu > .context-menu-item {
+	width: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+
+	padding: 0.2rem;
+	margin-right: 1rem;
+}
+
+.context-menu > .context-menu-item:hover {
+	cursor: pointer;
+
+	/* design guide CRT */
+	background-color: var(--window-color);
+	color: var(--window-background-color);
+
+	transition: 0.2s;
 }
 
 main {
 	width: 100%;
-    margin-bottom: auto;
-    margin-top: auto;
+	margin-bottom: auto;
+	margin-top: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 }
 
-
 /* aka taskbar */
 footer {
-    width: 100%;
-    min-height: 3rem;
-    max-height: max-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    margin-top: 2rem;
+	width: 100%;
+	min-height: 3rem;
+	max-height: max-content;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	margin-top: 2rem;
 
-    /* design guide CRT */
-    border-top: #777 4px solid;
-    border-bottom: #777 4px solid;
-    border-left: #777 2px solid;
-    border-right: #777 2px solid;
-    padding: 0.5rem;
+	/* design guide CRT */
+	border-top: #777 4px solid;
+	border-bottom: #777 4px solid;
+	border-left: #777 2px solid;
+	border-right: #777 2px solid;
+	padding: 0.5rem;
 
-    z-index: -100;
+	z-index: -100;
 
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
 
-    user-select: none;
+	user-select: none;
 }
 
 footer > .taskbar-item {
-    width: max-content;
-    height: max-content;
+	width: max-content;
+	height: max-content;
 
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
-    /* design guide CRT */
-    border-top: #fff 4px solid;
-    border-bottom: #fff 4px solid;
-    border-left: #fff 2px solid;
-    border-right: #fff 2px solid;
-    padding: 0.5rem;
-
-    padding: 0.2rem;
-    
-
-    white-space: nowrap;
-    
+	/* design guide CRT */
+	border-top: var(--window-status-color) 4px solid;
+	border-bottom: var(--window-status-color) 4px solid;
+	border-left: var(--window-status-color) 2px solid;
+	border-right: var(--window-status-color) 2px solid;
+	padding: 0.2rem;
+	white-space: nowrap;
 }
 
 footer > .taskbar-item:hover {
-    cursor: pointer;
+	cursor: pointer;
 
-    /* design guide CRT */
-    background-color: #fff;
-    color: #000;
+	/* design guide CRT */
+	background-color: var(--window-color);
+	color: var(--window-background-color);
 
-    transition: 0.2s;
+	transition: 0.2s;
 }
 
 footer > .taskbar-item.minimized {
-    /* design guide CRT */
-    border-top: #777 4px solid;
-    border-bottom: #777 4px solid;
-    border-left: #777 2px solid;
-    border-right: #777 2px solid;
+	/* design guide CRT */
+	--window-status-color: #777;
 
-    color: #777;
+	color: var(--window-status-color);
 
-    transition: 0.2s;
+	transition: 0.2s;
 }
 
 footer > .taskbar-item.minimized:hover {
+	/* design guide CRT */
+	background-color: #777;
+
+	color: var(--window-background-color);
+
+	transition: 0.2s;
+}
+
+footer > .taskbar-item.important {
+	/* design guide CRT */
+	--window-status-color: #ff0;
+
+	color: var(--window-status-color);
+
+	transition: 0.2s;
+
+	/* strobe slow */
+	animation: strobe 1s infinite;
+}
+
+@keyframes strobe {
+	0% {
+		border-top: var(--window-status-color) 4px solid;
+        border-bottom: var(--window-status-color) 4px solid;
+        border-left: var(--window-status-color) 2px solid;
+        border-right: var(--window-status-color) 2px solid;
+	}
+	50% {
+		border-top: #fff 4px solid;
+        border-bottom: #fff 4px solid;
+        border-left: #fff 2px solid;
+        border-right: #fff 2px solid;
+
+        color: #fff;
+	}
+	100% {
+		border-top: var(--window-status-color) 4px solid;
+        border-bottom: var(--window-status-color) 4px solid;
+        border-left: var(--window-status-color) 2px solid;
+        border-right: var(--window-status-color) 2px solid;
+	}
+}
+
+footer > .taskbar-item.important:hover {
+	/* do not strobe on hover */
+    animation: none;
+
     /* design guide CRT */
-    background-color: #777;
+    background-color: var(--window-status-color);
+    color: var(--window-background-color);
 
-    color: #000;
+}
 
-    transition: 0.2s;
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }

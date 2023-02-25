@@ -1,11 +1,5 @@
 function onStart() {
-    if (windowStorage.anyWindows() === false) {
-    
-        OSPrograms.welcome();
-    
-    } else {
-        windowStorage.loadAllWindows();
-    }
+    OSPrograms.welcome();
 }
 
 document.addEventListener("DOMContentLoaded", onStart);

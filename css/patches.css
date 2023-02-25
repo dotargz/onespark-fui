@@ -179,3 +179,10 @@
 	background-color: #fff;
 	border: transparent;
 }
+
+::-webkit-resizer {
+    color: #fff;
+}
+
+
+

@@ -9,11 +9,24 @@ document.addEventListener("OSWindowCreated", (e) => {
 	taskbar.appendChild(taskbarItem);
 
 	taskbarItem.addEventListener("click", () => {
+        // cannot minimize important windows
+        if (window.important === true) return;
+        
 		window.window.classList.toggle("minimized");
 
         // trigger window minimized event
-        document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: window }));
+        if (window.window.classList.contains("minimized")) {
+            document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: window }));
+        } else {
+            document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: window }));
+        }
 	});
+
+    // add support for important windows 
+    if (window.important === true) {
+        taskbarItem.classList.add("important");
+    }
+
 });
 
 document.addEventListener("OSWindowDestroyed", (e) => {
@@ -26,6 +39,14 @@ document.addEventListener("OSWindowDestroyed", (e) => {
 document.addEventListener("OSWindowMinimized", (e) => {
     let window = e.detail;
     let taskbarItem = document.querySelector(`.taskbar-item[data-window="${window.id}"]`);
-    taskbarItem.classList.toggle("minimized");
+    if (taskbarItem === null) return;
+    taskbarItem.classList.add("minimized");
+});
+
+document.addEventListener("OSWindowUnminimized", (e) => {
+    let window = e.detail;
+    let taskbarItem = document.querySelector(`.taskbar-item[data-window="${window.id}"]`);
+    if (taskbarItem === null) return;
+    taskbarItem.classList.remove("minimized");
 });
 

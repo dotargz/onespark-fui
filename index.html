@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="crt">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -22,9 +22,9 @@
 		<link rel="stylesheet" href="/css/ui.css" />
 		<link rel="stylesheet" href="/css/patches.css" />
 	</head>
-	<body class="crt">
+	<body>
 		<header>
-			<span class="logo">onespark ui ~ alpha</span>
+			<span class="logo">onespark ui ~ alpha v0.2.0</span>
 			<div class="nav">
 				<span class="nav-item dropdown" id="file-dropdown">
 					file
@@ -33,7 +33,7 @@
 						<a href="#">open file</a>
 						<a href="#" onclick="OSPrograms.launcher()">run program</a>
 						<a href="#" onclick="OSFunctions.clearStorage()">clear storage</a>
-						<a href="#">exit</a>
+						<a href="#" onclick="OSFunctions.exit()">exit</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="edit-dropdown">
@@ -42,50 +42,58 @@
 						<a href="#">undo</a>
 						<a href="#">redo</a>
 						<a href="#">cut</a>
-						<a href="#">copy</a>
-						<a href="#">paste</a>
+						<a href="#" onclick="OSFunctions.copy()">copy</a>
+                        <a href="#" onclick="OSFunctions.paste()">paste</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="view-dropdown">
 					view
 					<div class="dropdown-options">
-						<a href="#">hide windows</a>
-						<a href="#">show windows</a>
+						<a href="#" onclick="OSFunctions.minimizeAll()">hide windows</a>
+						<a href="#" onclick="OSFunctions.unMinimizeAll()">show windows</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="help-dropdown">
 					help
 					<div class="dropdown-options">
-						<a href="#">how-to</a>
-						<a href="#">readme</a>
-						<a href="#">source code</a>
+						<a href="#" onclick="OSPrograms.howTo()">how-to</a>
+						<a href="#" onclick="OSPrograms.changelog()">changelog</a>
+                        <a href="#" onclick="OSPrograms.about()">about</a>
+						<a href="https://github.com/dotargz/onespark-fui">source code</a>
 					</div>
 				</span>
 			</div>
 		</header>
 		<main>
-            <!--
+			<!--
                 We use javascript to create the workspace.
                 This is because we want to be able to 
                 create windows dynamically.
             -->
-        </main>
+		</main>
 		<footer id="taskbar">
-            <div class="taskbar-item" id="taskbar-home">
-                <span class="taskbar-item-icon material-symbols-sharp">menu</span>
-            </div>
+			<div class="taskbar-item" id="taskbar-home">
+				<span class="taskbar-item-icon material-symbols-sharp">menu</span>
+			</div>
 
 			<!-- 
                 We use javascript to create the taskbar.
                 This is because we want to be able to 
                 create windows dynamically.
             -->
-            
 		</footer>
+		<div id="contextMenu" class="context-menu">
+            <div class="context-menu-item" onclick="OSFunctions.copy()">copy</div>
+            <div class="context-menu-item" onclick="OSFunctions.paste()">paste</div>
+			<div class="context-menu-item" onclick="OSPrograms.launcher()">run program</div>
+			<div class="context-menu-item" onclick="OSFunctions.clearStorage()">clear storage</div>
+			<div class="context-menu-item" onclick="OSFunctions.minimizeAll()">hide windows</div>
+			<div class="context-menu-item" onclick="OSFunctions.unMinimizeAll()">show windows</div>
+		</div>
+		<script src="/js/window.js"></script>
+		<script src="/js/dropdown.js"></script>
+		<script src="/js/taskbar.js"></script>
+		<script src="/js/programs.js"></script>
+		<script src="/js/boot.js"></script>
 	</body>
-	<script src="/js/window.js"></script>
-	<script src="/js/dropdown.js"></script>
-    <script src="/js/taskbar.js"></script>
-	<script src="/js/programs.js"></script>
-	<script src="/js/boot.js"></script>
 </html>

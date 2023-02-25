@@ -1,178 +1,199 @@
 div.ui-window-draggable {
 	width: 50vmin;
-    min-width: 20rem;
-    min-height: 10rem;
-    position: absolute;
+	min-width: 20rem;
+	min-height: 10rem;
+	position: absolute;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
 
-	background-color: #000;
-	color: #fff;
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 
 	/* design guide CRT */
-	border-top: #fff 4px solid;
-	border-bottom: #fff 4px solid;
-	border-left: #fff 2px solid;
-	border-right: #fff 2px solid;
+	border-top: var(--window-color) 4px solid;
+	border-bottom: var(--window-color) 4px solid;
+	border-left: var(--window-color) 2px solid;
+	border-right: var(--window-color) 2px solid;
 
-    overflow: hidden;
-
+	overflow: hidden;
 }
 
 div.ui-window-draggable.latest {
-    z-index: 100;
+	z-index: 100;
 }
 
 div.ui-window-draggable.minimized {
-    display: none;
+	display: none;
+}
+
+div.ui-window-draggable.important {
+	z-index: 1000;
+
+	/* design guide CRT dark yellow */
+	--window-color: #ff0;
 }
 
 div.ui-window-draggable > .ui-window-titlebar {
 	width: 100%;
-    min-height: 2rem;
+	height: 2rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
 	align-items: center;
 
-	background-color: #000;
-	color: #fff;
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 
 	/* design guide CRT */
-	border-bottom: #fff 4px solid;
+	border-bottom: var(--window-color) 4px solid;
 	padding-left: 0.5rem;
 	padding-right: 0.5rem;
 
-    cursor: move;
-    position: relative;
-    user-select: none;
+	cursor: move;
+	position: relative;
+	user-select: none;
 }
 
-div.ui-window-draggable > .ui-window-titlebar > .ui-window-title
- {
-    height: max-content;
+div.ui-window-draggable > .ui-window-titlebar > .ui-window-title {
+	height: max-content;
 	font-weight: bolder;
-    overflow-x: hidden;
+	overflow-x: hidden;
 
-    margin-right: 1rem;
+	margin-right: 1rem;
 }
 
 div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
-    width: 20%;
-    min-width: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+	width: 20%;
+	min-width: 5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
 
-    margin-left: auto;
+	gap: 0.5rem;
+
+	margin-left: auto;
 }
 
 .ui-window-control:hover {
-    cursor: pointer;
+	cursor: pointer;
 
-    /* design guide CRT */
-    background-color: #fff;
-    color: #000;
+	/* design guide CRT */
+	background-color: var(--window-color);
+	color: var(--window-background-color);
 
-    transition: 0.2s;
+	transition: 0.2s;
 }
 
 div.ui-window-draggable > .ui-window-content {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
 
-    /* padding: 0.5rem; */
+	/* padding: 0.5rem; */
 
-    gap: 0.5rem;
+	gap: 0.5rem;
 
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .ui-window-content > p.ui-window-text {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+	width: 100%;
+	height: max-content;
+	display: inline-block;
 
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
+	border: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
 }
 
-.ui-window-content > .ui-window-textarea {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+.ui-window-content > .ui-window-textarea, .ui-window-content > .ui-window-iframe {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
 
-    /* design guide CRT */
-    background-color: #000;
-    color: #fff;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 1rem;
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+	font-family: "JetBrains Mono", monospace;
+	font-size: 1rem;
 
-    text-transform: none;
+	text-transform: none;
 
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
-    resize: none;
+	border: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	resize: none;
 }
 
 div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
-    margin-top: auto;
+	margin-top: auto;
 }
 
 .ui-window-button {
-    width: 10rem;
-    height: 2rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+	width: 10rem;
+	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 
-    margin-right: 0.5rem;
+	margin-right: 0.5rem;
 
-    background-color: #000;
-    color: #fff;
-    font-weight: bolder;
-    
-    text-transform: uppercase;
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+	font-weight: bolder;
 
-    /* design guide CRT */
-    border-top: #fff 4px solid;
-    border-bottom: #fff 4px solid;
-    border-left: #fff 2px solid;
-    border-right: #fff 2px solid;
-    background-color: #fff;
-    color: #000;
+	text-transform: uppercase;
+
+	/* design guide CRT */
+	border-top: var(--window-color) 4px solid;
+	border-bottom: var(--window-color) 4px solid;
+	border-left: var(--window-color) 2px solid;
+	border-right: var(--window-color) 2px solid;
+	background-color: var(--window-color);
+	color: var(--window-background-color);
 }
 
 .ui-window-button:hover {
-    cursor: pointer;
+	cursor: pointer;
 
-    /* design guide CRT */
-    background-color: #000;
-    color: #fff;
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 
-    transition: 0.2s;
+	transition: 0.2s;
 }
+
+
+
+.ui-window-jsdos-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.jsdos-iframe {
+    position: absolute;
+    top: 0;
+    left: -35px;
+
+}
+
+

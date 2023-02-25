@@ -1,3 +1,23 @@
+/*
+
+Window Manager for the OS
+Copyright (C) 2023  BlueSkye
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+*/
+
 function makeDraggable(element) {
 	let currentPosX = 0,
 		currentPosY = 0,
@@ -42,6 +62,12 @@ function makeDraggable(element) {
 
 		element.style.top = element.offsetTop - currentPosY + "px";
 		element.style.left = element.offsetLeft - currentPosX + "px";
+
+		// update the window's position
+		const windowID = element.getAttribute("data-window");
+		const window = OSWindow.getWindowById(windowID);
+		window.x = element.offsetTop - currentPosY;
+		window.y = element.offsetLeft - currentPosX;
 	}
 
 	function closeDragElement() {
@@ -51,7 +77,7 @@ function makeDraggable(element) {
 }
 
 class OSWindow {
-	constructor(id, title, content, width, height, z = 1, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
+	constructor(id, title, content, width, height, z = 1, important = false, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
 		this.window = document.createElement("div");
 		this.id = id;
 		this.title = title;
@@ -59,6 +85,7 @@ class OSWindow {
 		this.width = width;
 		this.height = height;
 		this.z = z;
+		this.important = important;
 		this.iscentered = iscentered;
 		this.padding = padding;
 		this.resizeable = resizeable;
@@ -81,17 +108,11 @@ class OSWindow {
 		const closeButton = this.window.querySelector(".ui-window-control-close");
 
 		minimizeButton.addEventListener("click", () => {
-			this.window.classList.toggle("minimized");
-
-			// trigger window minimized event
-			document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: this }));
+			this.toggleMinimize();
 		});
 
 		maximizeButton.addEventListener("click", () => {
-			this.window.classList.toggle("maximized");
-
-			// trigger window maximized event
-			document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
+			this.toggleMaximize();
 		});
 
 		closeButton.addEventListener("click", () => {
@@ -137,8 +158,8 @@ class OSWindow {
 	}
 
 	refresh() {
-		this.window.style.width = this.width + "px";
-		this.window.style.height = this.height + "px";
+		this.window.style.width = `${this.width}px`;
+		this.window.style.height = `calc(${this.height}px + 2.1rem)`;
 
 		if (this.iscentered === true) {
 			this.window.style.left = "50%";
@@ -151,32 +172,51 @@ class OSWindow {
 			throw new Error("iscentered must be a boolean value");
 		}
 
-		if (this.padding === true) {
-			this.padding = "padding: 0.5rem;";
-		} else if (this.padding === false) {
-			this.padding = "padding: 0;";
+		let paddingStyle = "";
+
+		if (this.padding == true) {
+			paddingStyle = "padding: 0.5rem;";
+		} else if (this.padding == false) {
+			paddingStyle = "padding: 0;";
 		} else {
 			throw new Error("padding must be a boolean value");
 		}
 
-		if (this.resizeable === true) {
+		if (this.resizeable == true) {
 			this.window.style.resize = "both";
-		} else if (this.resizeable === false) {
+		} else if (this.resizeable == false) {
 			this.window.style.resize = "none";
 		} else {
 			throw new Error("resizeable must be a boolean value");
+		}
+
+		let controls_available = `
+		<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}">remove</span>
+		<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}">fullscreen</span>
+		<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
+		`;
+
+		if (this.important == true) {
+			this.window.classList.add("important");
+			controls_available = `
+			<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}" style="display:none;">remove</span>
+			<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}" style="display:none;">fullscreen</span>
+			<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
+			`;
+		} else if (this.important == false) {
+			this.window.classList.remove("important");
+		} else {
+			throw new Error("important must be a boolean value");
 		}
 
 		this.window.innerHTML = `
 		<div class="ui-window-titlebar">
 						<span class="ui-window-title">${this.title}</span>
 						<span class="ui-window-controls">
-							<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}">remove</span>
-							<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}">fullscreen</span>
-							<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
+							${controls_available}
 						</span>
 					</div>
-					<div class="ui-window-content" style="${this.padding}">
+					<div class="ui-window-content" style="${paddingStyle}">
 						${this.content}
 					</div>
 		`;
@@ -190,28 +230,56 @@ class OSWindow {
 		document.dispatchEvent(new CustomEvent("OSWindowDestroyed", { detail: this }));
 	}
 
-	save() {
-		return {
-			id: this.id,
-			title: this.title,
-			content: this.content,
-			width: this.width,
-			height: this.height,
-			z: this.z,
-			iscentered: this.iscentered,
-			padding: this.padding,
-			resizeable: this.resizeable,
-			x: this.x,
-			y: this.y,
-		};
+	toggleMinimize() {
+		this.window.classList.toggle("minimized");
+		if (this.window.classList.contains("minimized")) {
+			document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: this }));
+		} else {
+			document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: this }));
+		}
 	}
 
-	saveToLocalStorage() {
-		localStorage.setItem("OSWindow-" + this.id, JSON.stringify(this.save()));
+	toggleMaximize() {
+		this.window.classList.toggle("maximized");
+		if (this.window.classList.contains("maximized")) {
+			document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
+		} else {
+			document.dispatchEvent(new CustomEvent("OSWindowUnmaximized", { detail: this }));
+		}
 	}
 
-	removeFromLocalStorage() {
-		localStorage.removeItem("OSWindow-" + this.id);
+	minimize() {
+		this.window.classList.add("minimized");
+		document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: this }));
+	}
+
+	unminimize() {
+		this.window.classList.remove("minimized");
+		document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: this }));
+	}
+
+	maximize() {
+		this.window.classList.add("maximized");
+		document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
+	}
+
+	unmaximize() {
+		this.window.classList.remove("maximized");
+		document.dispatchEvent(new CustomEvent("OSWindowUnmaximized", { detail: this }));
+	}
+
+	restoreSize() {
+		this.window.classList.remove("minimized");
+		this.window.classList.remove("maximized");
+		document.dispatchEvent(new CustomEvent("OSWindowRestored", { detail: this }));
+	}
+
+	makeImportant() {
+		this.window.classList.add("important");
+	}
+
+	makeUnimportant() {
+		this.window.classList.remove("important");
 	}
 
 	static destroyWindowById(id) {
@@ -234,28 +302,3 @@ class OSWindow {
 }
 
 OSWindow.windows = [];
-
-const windowStorage = {
-	loadAllWindows: function () {
-		for (let i = 0; i < localStorage.length; i++) {
-			if (localStorage.key(i).startsWith("OSWindow-")) {
-				let data = JSON.parse(localStorage.getItem(localStorage.key(i)));
-				new OSWindow(data.title, data.content, data.width, data.height, data.z, data.iscentered, data.padding, data.resizeable, data.x, data.y);
-			}
-		}
-	},
-
-	loadWindow: function (id) {
-		let data = JSON.parse(localStorage.getItem("OSWindow-" + id));
-		new OSWindow(data.title, data.content, data.width, data.height, data.z, data.iscentered, data.padding, data.resizeable, data.x, data.y);
-	},
-
-	anyWindows: function () {
-		for (let i = 0; i < localStorage.length; i++) {
-			if (localStorage.key(i).startsWith("OSWindow-")) {
-				return true;
-			}
-		}
-		return false;
-	},
-};
