@@ -1,3 +1,5 @@
+const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+
 window.addEventListener("error", (e) => {
 	try {
 		let _id = randomId();
@@ -26,6 +28,6 @@ window.addEventListener("error", (e) => {
         });
 
 	} catch (ee) {
-		alert(`Something went wrong while trying to display an error window. Please report this error to the developer.\n\n${ee}`);
+		window.location.href = `fatalerror.html?filename=${ee.filename}&message=${ee.message}&lineno=${ee.lineno}&colno=${ee.colno}&errorcode=${"0x" + genRanHex(8)}`;
 	}
 });

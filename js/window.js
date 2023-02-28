@@ -330,6 +330,6 @@ class OSWindow {
 		}
 		return null;
 	}
-}
+
 
 OSWindow.windows = [];

@@ -40,6 +40,7 @@ document.addEventListener("OSWindowCreated", (e) => {
 document.addEventListener("OSWindowDestroyed", (e) => {
 	let window = e.detail;
 	let taskbarItem = document.querySelector(`.taskbar-item[data-window="${window.id}"]`);
+    if (taskbarItem === null) return;
 	taskbarItem.remove();
 });
 
