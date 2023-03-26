@@ -12,14 +12,7 @@ document.addEventListener("OSWindowCreated", (e) => {
         // cannot minimize important windows
         if (window.important === true) return;
 
-		window.window.classList.toggle("minimized");
-
-        // trigger window minimized event
-        if (window.window.classList.contains("minimized")) {
-            document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: window }));
-        } else {
-            document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: window }));
-        }
+		OSWindow.getWindowById(window.id).toggleMinimize();
 	});
 
     // add support for important windows and error windows. a window cannot have both important and error classes, but it can have the value set to true for both
