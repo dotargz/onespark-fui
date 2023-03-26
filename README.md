@@ -2,7 +2,7 @@
 a WIP os-like FUI that has some actual use
 
 ## TODO
-- [*] Add the ability to maximize windows
+- [x] Add the ability to maximize windows
 - [ ] Responsive window sizing
 - [ ] Mute and volume controls
 - [ ] 'EDIT' tab working (cut, copy, paste, etc.)
