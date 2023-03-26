@@ -17,72 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 */
-
-// Core functions
-function makeDraggable(element) {
-	let currentPosX = 0,
-		currentPosY = 0,
-		previousPosX = 0,
-		previousPosY = 0;
-
-	const windowTop = element.querySelector(".ui-window-titlebar");
-
-	if (windowTop) {
-		windowTop.addEventListener("mousedown", dragMouseDown);
-	} else {
-		element.addEventListener("mousedown", dragMouseDown);
-	}
-
-	function dragMouseDown(e) {
-		e.preventDefault();
-
-		previousPosX = e.clientX;
-		previousPosY = e.clientY;
-
-		document.addEventListener("mouseup", closeDragElement);
-		document.addEventListener("mousemove", elementDrag);
-
-		element.classList.add("latest");
-		// remove the latest class from all other windows
-		const allWindows = document.querySelectorAll(".ui-window-draggable");
-		allWindows.forEach((window) => {
-			if (window !== element) {
-				window.classList.remove("latest");
-			}
-		});
-	}
-
-	function elementDrag(e) {
-		e.preventDefault();
-
-		currentPosX = previousPosX - e.clientX;
-		currentPosY = previousPosY - e.clientY;
-
-		previousPosX = e.clientX;
-		previousPosY = e.clientY;
-
-		element.style.top = element.offsetTop - currentPosY + "px";
-		element.style.left = element.offsetLeft - currentPosX + "px";
-
-		// update the window's position
-		const windowID = element.getAttribute("data-window");
-		const window = OSWindow.getWindowById(windowID);
-		window.x = element.offsetTop - currentPosY;
-		window.y = element.offsetLeft - currentPosX;
-	}
-
-	function closeDragElement() {
-		document.removeEventListener("mouseup", closeDragElement);
-		document.removeEventListener("mousemove", elementDrag);
-	}
-}
-
-function randomId() {
-	const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
-	return uint32.toString(16);
-}
-
 class OSWindow {
+	static windows = [];
 	constructor(id, title, content, width, height, z = 1, error = false, important = false, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
 		this.window = document.createElement("div");
 		this.id = id;
@@ -96,6 +32,8 @@ class OSWindow {
 		this.iscentered = iscentered;
 		this.padding = padding;
 		this.resizeable = resizeable;
+		this.maximized = false;
+		this.minimized = false;
 		this.x = x;
 		this.y = y;
 
@@ -103,78 +41,20 @@ class OSWindow {
 		this.window.classList.add("latest");
 		this.window.setAttribute("data-window", this.id);
 
-		this.refresh();
-
-		document.body.getElementsByTagName("main")[0].appendChild(this.window);
-
-		makeDraggable(this.window);
-
-		// add event listeners to the window controls
-		const minimizeButton = this.window.querySelector(".ui-window-control-minimize");
-		const maximizeButton = this.window.querySelector(".ui-window-control-maximize");
-		const closeButton = this.window.querySelector(".ui-window-control-close");
-
-		minimizeButton.addEventListener("click", () => {
-			this.toggleMinimize();
-		});
-
-		maximizeButton.addEventListener("click", () => {
-			this.toggleMaximize();
-		});
-
-		closeButton.addEventListener("click", () => {
-			this.destroy();
-		});
-
-		// trigger window creation event
-		document.dispatchEvent(new CustomEvent("OSWindowCreated", { detail: this }));
-
-		// Add the newly created window instance to the list of all windows
-		OSWindow.windows.push(this);
-	}
-
-	// add methods here
-	updateTitle(title) {
-		this.title = title;
-		this.refresh();
-	}
-
-	updateContent(content) {
-		this.content = content;
-		this.refresh();
-	}
-
-	updateWidth(width) {
-		this.width = width;
-		this.refresh();
-	}
-
-	updateHeight(height) {
-		this.height = height;
-		this.refresh();
-	}
-
-	updateZ(z) {
-		this.z = z;
-		this.refresh();
-	}
-
-	updatePadding(padding) {
-		this.padding = padding;
-		this.refresh();
-	}
-
-	refresh() {
-		this.window.style.width = `${this.width}px`;
-		this.window.style.height = `calc(${this.height}px + 2rem)`;
-
+		if (this.maximized === false) {
+			this.window.style.width = `${this.width}px`;
+			this.window.style.height = `calc(${this.height}px + 2rem)`;
+		} else if (this.maximized === true) {
+			this.window.style.width = "100%";
+			this.window.style.height = "84vh";
+		}
 		if (this.iscentered === true) {
 			this.window.style.left = "50%";
 			this.window.style.top = "50%";
 			this.window.style.transform = "translate(-50%, -50%)";
 		} else if (this.iscentered === false) {
-			this.window.style.left = this.x;
-			this.window.style.top = this.y;
+			this.window.style.left = `${this.left}px`;
+			this.window.style.top = `${this.top}px`;
 		} else {
 			throw new Error("iscentered must be a boolean value");
 		}
@@ -189,19 +69,24 @@ class OSWindow {
 			throw new Error("padding must be a boolean value");
 		}
 
-		if (this.resizeable == true) {
-			this.window.style.resize = "both";
-		} else if (this.resizeable == false) {
-			this.window.style.resize = "none";
-		} else {
-			throw new Error("resizeable must be a boolean value");
-		}
-
 		let controls_available = `
 		<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}">remove</span>
 		<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}">fullscreen</span>
 		<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
 		`;
+
+		if (this.resizeable == true) {
+			this.window.style.resize = "both";
+		} else if (this.resizeable == false) {
+			this.window.style.resize = "none";
+			controls_available = `
+			<span class="ui-window-control ui-window-control-minimize material-symbols-sharp" data-window="${this.id}">remove</span>
+			<span class="ui-window-control ui-window-control-maximize material-symbols-sharp" data-window="${this.id}" style="display:none;">fullscreen</span>
+			<span class="ui-window-control ui-window-control-close material-symbols-sharp" data-window="${this.id}">close</span>
+			`;
+		} else {
+			throw new Error("resizeable must be a boolean value");
+		}
 
 		// a window can be important, which means it can't be minimized or maximized. a window cannot have both important and error classes, but it can have the value set to true for both
 		if (this.important == true && this.error == false) {
@@ -233,19 +118,54 @@ class OSWindow {
 		}
 
 		this.window.innerHTML = `
-		<div class="ui-window-titlebar">
-						<span class="ui-window-title">${this.title}</span>
-						<span class="ui-window-controls">
-							${controls_available}
-						</span>
-					</div>
-					<div class="ui-window-content" style="${paddingStyle}">
-						${this.content}
-					</div>
+			<div class="ui-window-titlebar">
+				<span class="ui-window-title">${this.title}</span>
+				<span class="ui-window-controls">
+					${controls_available}
+				</span>
+			</div>
+			<div class="ui-window-content" style="${paddingStyle}">
+				${this.content}
+			</div>
 		`;
 
-		// trigger window refresh event
-		document.dispatchEvent(new CustomEvent("OSWindowRefreshed", { detail: this }));
+		document.body.getElementsByTagName("main")[0].appendChild(this.window);
+
+		OSWindow.makeDraggable(this.window);
+
+		// add event listeners to the window controls
+		this.minimizeButton = this.window.querySelector(".ui-window-control-minimize");
+		this.maximizeButton = this.window.querySelector(".ui-window-control-maximize");
+		this.closeButton = this.window.querySelector(".ui-window-control-close");
+
+		this.minimizeButton.addEventListener("click", () => {
+			this.toggleMinimize();
+		});
+
+		this.maximizeButton.addEventListener("click", () => {
+			this.toggleMaximize();
+		});
+
+		this.closeButton.addEventListener("click", () => {
+			this.destroy();
+		});
+
+		// trigger window creation event
+		document.dispatchEvent(new CustomEvent("OSWindowCreated", { detail: this }));
+
+		// Add the newly created window instance to the list of all windows
+		OSWindow.windows.push(this);
+	}
+
+	// add methods here
+	updateTitle(title) {
+		this.title = title;
+		this.window.querySelector(".ui-window-title").innerHTML = this.title;
+	}
+
+	updateContent(content) {
+		this.content = content;
+		this.window.querySelector(".ui-window-content").innerHTML = this.content;
 	}
 
 	destroy() {
@@ -254,41 +174,67 @@ class OSWindow {
 	}
 
 	toggleMinimize() {
-		this.window.classList.toggle("minimized");
-		if (this.window.classList.contains("minimized")) {
-			document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: this }));
+		if (this.minimized) {
+			this.unminimize();
 		} else {
-			document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: this }));
+			this.minimize();
 		}
 	}
 
 	toggleMaximize() {
-		this.window.classList.toggle("maximized");
-		if (this.window.classList.contains("maximized")) {
-			document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
+		if (this.maximized) {
+			this.unmaximize();
 		} else {
-			document.dispatchEvent(new CustomEvent("OSWindowUnmaximized", { detail: this }));
+			this.maximize();
 		}
 	}
 
 	minimize() {
+		this.minimized = true;
 		this.window.classList.add("minimized");
 		document.dispatchEvent(new CustomEvent("OSWindowMinimized", { detail: this }));
+
+		if (this.important || this.error) {
+			console.warn(`Window "${this.id}" is set as not minimizable, but it was minimized. This may cause unexpected behavior.`);
+		}
 	}
 
 	unminimize() {
+		this.minimized = false;
 		this.window.classList.remove("minimized");
 		document.dispatchEvent(new CustomEvent("OSWindowUnminimized", { detail: this }));
+
+		if (this.important || this.error) {
+			console.warn(`Window "${this.id}" is set as not minimizable, but it was unminimized. This may cause unexpected behavior.`);
+		}
 	}
 
 	maximize() {
+		this.maximized = true;
 		this.window.classList.add("maximized");
+		this.window.style.width = "100%";
+		this.window.style.height = "84vh";
+		this.window.style.left = "50%";
+		this.window.style.top = "50%";
 		document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
+
+		if (!this.resizeable || this.important || this.error) {
+			console.warn(`Window "${this.id}" is set as not resizeable, but it was resized. This may cause unexpected behavior.`);
+		}
 	}
 
 	unmaximize() {
+		this.maximized = false;
 		this.window.classList.remove("maximized");
+		this.window.style.width = `${this.width}px`;
+		this.window.style.height = `calc(${this.height}px + 2rem)`;
+		this.window.style.left = `${this.left}px`;
+		this.window.style.top = `${this.top}px`;
 		document.dispatchEvent(new CustomEvent("OSWindowUnmaximized", { detail: this }));
+
+		if (!this.resizeable || this.important || this.error) {
+			console.warn(`Window "${this.id}" is set as not resizeable, but it was resized. This may cause unexpected behavior.`);
+		}
 	}
 
 	restoreSize() {
@@ -331,5 +277,64 @@ class OSWindow {
 		return null;
 	}
 
+	// Technically, this is a static method, but it's not meant to be used outside of the class
+	// and it's not meant to be called directly. It's only used by the constructor.
+	// we should really make this a private method, but that's not possible in JS
+	static makeDraggable(element) {
+		let currentPosX = 0,
+			currentPosY = 0,
+			previousPosX = 0,
+			previousPosY = 0;
 
-OSWindow.windows = [];
+		const windowTop = element.querySelector(".ui-window-titlebar");
+
+		if (windowTop) {
+			windowTop.addEventListener("mousedown", dragMouseDown);
+		} else {
+			element.addEventListener("mousedown", dragMouseDown);
+		}
+
+		function dragMouseDown(e) {
+			e.preventDefault();
+
+			previousPosX = e.clientX;
+			previousPosY = e.clientY;
+
+			document.addEventListener("mouseup", closeDragElement);
+			document.addEventListener("mousemove", elementDrag);
+
+			element.classList.add("latest");
+			// remove the latest class from all other windows
+			const allWindows = document.querySelectorAll(".ui-window-draggable");
+			allWindows.forEach((window) => {
+				if (window !== element) {
+					window.classList.remove("latest");
+				}
+			});
+		}
+
+		function elementDrag(e) {
+			e.preventDefault();
+
+			currentPosX = previousPosX - e.clientX;
+			currentPosY = previousPosY - e.clientY;
+
+			previousPosX = e.clientX;
+			previousPosY = e.clientY;
+
+			element.style.top = element.offsetTop - currentPosY + "px";
+			element.style.left = element.offsetLeft - currentPosX + "px";
+
+			// update the window's position
+			const windowID = element.getAttribute("data-window");
+			const window = OSWindow.getWindowById(windowID);
+			window.x = element.offsetTop - currentPosY;
+			window.y = element.offsetLeft - currentPosX;
+		}
+
+		function closeDragElement() {
+			document.removeEventListener("mouseup", closeDragElement);
+			document.removeEventListener("mousemove", elementDrag);
+		}
+	}
+}

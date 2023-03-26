@@ -70,38 +70,20 @@ const OSPrograms = {
 			"Changelog",
 			`
             <p class="ui-window-text">
-            0.1.0: initial release:
+            0.4.0: maximization & more:
             </p>
             <ul class="ui-window-text">
-                <li>added welcome program</li>
-                <li>added text editor program</li>
-                <li>added basic window controls</li>
-            </ul>
-            <p class="ui-window-text">
-            0.2.0: overhauled window system:
-            </p>
-            <ul class="ui-window-text">
-                <li>added dynamic window stacking</li>
-                <li>added window minimizing</li>
-                <li>added window closing</li>
-                <li>added 'important' windows</li>
-                <li>added 'DOOM' program</li>
-                <li>added 'how-to' program</li>
-                <li>added 'changelog' program</li>
-                <li>added 'about' program</li>
-            </ul>
-            <p class="ui-window-text">
-            0.3.0: added error handling:
-            </p>
-            <ul class="ui-window-text">
-                <li>added error windows</li>
-                <li>added error handling system</li>
-                <li>added 'debug' program</li>
-                <li>various bug fixes</li>
+				<li>added the maximize function</li>
+				<li>made the maximize function only work when the window is resizable</li>
+				<li>fixed the website crashing immediately</li>
+				<li>fixed an issue with the taskbar</li>
+				<li>refactored how the minimize & maximize system works</li>
+				<li>made the changelog only show the latest update</li>
+				<li>tons of bug fixes and QoL improvements</li>
             </ul>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
-			485,
+			350,
 			2,
             (error = false),
 			(important = false),
