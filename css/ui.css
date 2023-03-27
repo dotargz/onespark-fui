@@ -2,6 +2,8 @@ div.ui-window-draggable {
 	width: 50vmin;
 	min-width: 20rem;
 	min-height: 5rem;
+	max-height: 85vh;
+	max-width: 100%;
 	position: absolute;
 	display: flex;
 	flex-direction: column;

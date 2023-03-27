@@ -1,7 +1,7 @@
 const OSPrograms = {
 	welcome: function (x = 0, y = 0) {
 		// create a new window with the new OSWindow class
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.welcome.self = new OSWindow(
 			_id,
 			"welcome!",
@@ -10,7 +10,7 @@ const OSPrograms = {
 			300,
 			175,
 			2,
-            (error = false),
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -29,7 +29,7 @@ const OSPrograms = {
 	},
 
 	howTo: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.howTo.self = new OSWindow(
 			_id,
 			"How-To Manual",
@@ -49,7 +49,7 @@ const OSPrograms = {
 			500,
 			350,
 			2,
-            (error = false),
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -64,28 +64,23 @@ const OSPrograms = {
 	},
 
 	changelog: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.changelog.self = new OSWindow(
 			_id,
 			"Changelog",
 			`
-            <p class="ui-window-text">
-            0.4.0: maximization & more:
-            </p>
-            <ul class="ui-window-text">
-				<li>added the maximize function</li>
-				<li>made the maximize function only work when the window is resizable</li>
-				<li>fixed the website crashing immediately</li>
-				<li>fixed an issue with the taskbar</li>
-				<li>refactored how the minimize & maximize system works</li>
-				<li>made the changelog only show the latest update</li>
-				<li>tons of bug fixes and QoL improvements</li>
-            </ul>
+            <p class="ui-window-text">0.5.0: DOS revolution:</p>
+			<ul class="ui-window-text">
+				<li>added the abliity to run any DOS program easily</li>
+				<li>fixed DOOM not working on certain networks</li>
+				<li>fixed fatal error from internal firefox issue</li>
+				<li>refactored the boot code</li>
+			</ul>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
 			350,
 			2,
-            (error = false),
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -99,53 +94,53 @@ const OSPrograms = {
 		});
 	},
 
-    debug: function (x = 0, y = 0) {
-        let _id = randomId();
-        this.debug.self = new OSWindow(
-            _id,
-            "Debug Options",
-            `<div class="ui-window-row">
+	debug: function (x = 0, y = 0) {
+		let _id = OSFirmware.randomId();
+		this.debug.self = new OSWindow(
+			_id,
+			"Debug Options",
+			`<div class="ui-window-row">
                 <button class="ui-window-button throw-error-button" data-window="${_id}">Throw Error</button>
                 <button class="ui-window-button throw-long-error-button" data-window="${_id}">Throw Long Error</button>
                 <button class="ui-window-button close-all-button" data-window="${_id}">Close All Windows</button>
                 <button class="ui-window-button relaunch-button" data-window="${_id}">Relaunch OS</button>
             </div>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
-            375,
-            150,
-            2,
-            (error = false),
-            (important = false),
-            (iscentered = true),
-            (padding = true),
-            (resizeable = false),
-            (x = x),
-            (y = y)
-        );
+			375,
+			150,
+			2,
+			(error = false),
+			(important = false),
+			(iscentered = true),
+			(padding = true),
+			(resizeable = false),
+			(x = x),
+			(y = y)
+		);
 
-        this.debug.self.window.querySelector(".ui-window-buttons > .ui-window-button").addEventListener("click", () => {
-            OSWindow.destroyWindowById(_id);
-        });
+		this.debug.self.window.querySelector(".ui-window-buttons > .ui-window-button").addEventListener("click", () => {
+			OSWindow.destroyWindowById(_id);
+		});
 
-        this.debug.self.window.querySelector(".throw-error-button").addEventListener("click", () => {
-            throw new Error("This is a test error.");
-        });
+		this.debug.self.window.querySelector(".throw-error-button").addEventListener("click", () => {
+			throw new Error("This is a test error.");
+		});
 
-        this.debug.self.window.querySelector(".throw-long-error-button").addEventListener("click", () => {
-            throw new Error("This is a long test error. It really is a long test error. It's so long that even the longest of test errors are jealous of it");
-        });
+		this.debug.self.window.querySelector(".throw-long-error-button").addEventListener("click", () => {
+			throw new Error("This is a long test error. It really is a long test error. It's so long that even the longest of test errors are jealous of it");
+		});
 
-        this.debug.self.window.querySelector(".close-all-button").addEventListener("click", () => {
-            OSWindow.destroyAllWindows();
-        });
+		this.debug.self.window.querySelector(".close-all-button").addEventListener("click", () => {
+			OSWindow.destroyAllWindows();
+		});
 
-        this.debug.self.window.querySelector(".relaunch-button").addEventListener("click", () => {
-            location.reload();
-        });
-    },
+		this.debug.self.window.querySelector(".relaunch-button").addEventListener("click", () => {
+			location.reload();
+		});
+	},
 
 	about: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.about.self = new OSWindow(
 			_id,
 			"About",
@@ -175,7 +170,7 @@ const OSPrograms = {
 			520,
 			410,
 			2,
-            (error = false),
+			(error = false),
 			(important = false),
 			(iscentered = true),
 			(padding = true),
@@ -190,7 +185,7 @@ const OSPrograms = {
 	},
 
 	textEditor: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.textEditor.self = new OSWindow(_id, "text editor", `<textarea class="ui-window-textarea" data-window="${_id}" placeholder="TYPE HERE..."></textarea>`, 300, 210, 2, (error = false), (important = false), (iscentered = true), (padding = true), (resizeable = true), (x = x), (y = y));
 
 		this.textEditor.self.window.querySelector(".ui-window-textarea").addEventListener("input", () => {
@@ -201,12 +196,17 @@ const OSPrograms = {
 	},
 
 	doom: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
+
+		// bugfix
+		localStorage.setItem("emulators.ui.ui.tipsV2", "false");
+		localStorage.setItem("emulators.ui.ui.autolockTipsV2", "false");
+
 		this.doom.self = new OSWindow(
 			_id,
 			"doom",
 			`<div class="ui-window-jsdos-wrapper">
-            <iframe width="710" height="400" frameborder="0" src="https://dos.zone/player/?bundleUrl=https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom.jsdos?anonymous=1" allowfullscreen class="ui-window-iframe jsdos-iframe" id="doom-${_id}" data-window="${_id}"
+            <iframe width="710" height="400" frameborder="0" src="../assets/doom/doom.html?bundleUrl=https%3A%2F%2Fcdn.dos.zone%2Fcustom%2Fdos%2Fdoom.jsdos?anonymous=1" allowfullscreen class="ui-window-iframe jsdos-iframe" id="doom-${_id}" data-window="${_id}"
             ></iframe>
             </div>`,
 			632,
@@ -223,7 +223,7 @@ const OSPrograms = {
 	},
 
 	launcher: function (x = 0, y = 0) {
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.launcher.self = new OSWindow(
 			_id,
 			"run program",
@@ -268,7 +268,7 @@ const OSPrograms = {
 const OSFunctions = {
 	clearStorage: function () {
 		// prompt the user to confirm that they want to clear the localStorage using an OSWindow
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.clearStorage.self = new OSWindow(
 			_id,
 			"clear storage",
@@ -332,7 +332,7 @@ const OSFunctions = {
 
 	exit: function () {
 		// prompt the user to confirm that they want to clear the localStorage using an OSWindow
-		let _id = randomId();
+		let _id = OSFirmware.randomId();
 		this.exit.self = new OSWindow(
 			_id,
 			"exit",
@@ -341,7 +341,7 @@ const OSFunctions = {
 			300,
 			100,
 			2,
-            (error = false),
+			(error = false),
 			(important = true),
 			(iscentered = true),
 			(padding = true)
@@ -351,7 +351,7 @@ const OSFunctions = {
 		this.exit.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
 			OSWindow.destroyWindowById(_id);
 			// animate fade out the html element (only play once)
-			document.querySelector("html").style.animation = "fadeOut 0.75s normal forwards ease-in-out";
+			document.querySelector("body").style.animation = "fadeOut 0.75s normal forwards ease-in-out";
 			// reload the page after 5 seconds
 			setTimeout(() => {
 				// reload the page

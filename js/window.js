@@ -1,22 +1,3 @@
-/*
-
-Window Manager for the OS. A core part of the OS.
-Copyright (C) 2023  BlueSkye
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-*/
 class OSWindow {
 	static windows = [];
 	constructor(id, title, content, width, height, z = 1, error = false, important = false, iscentered = false, padding = true, resizeable = false, x = 0, y = 0) {
@@ -150,6 +131,14 @@ class OSWindow {
 			this.destroy();
 		});
 
+		// when OSwindow width or height changes, unmaximize the window
+		this.window.addEventListener("resize", () => {
+			if (this.maximized) {
+				this.unmaximize();
+				console.log("unmaximized");
+			}
+		});
+
 		// trigger window creation event
 		document.dispatchEvent(new CustomEvent("OSWindowCreated", { detail: this }));
 
@@ -213,7 +202,7 @@ class OSWindow {
 		this.maximized = true;
 		this.window.classList.add("maximized");
 		this.window.style.width = "100%";
-		this.window.style.height = "84vh";
+		this.window.style.height = "85vh";
 		this.window.style.left = "50%";
 		this.window.style.top = "50%";
 		document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
