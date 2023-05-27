@@ -54,5 +54,5 @@ document.addEventListener("OSWindowUnminimized", (e) => {
 
 const startMenu = document.getElementById("taskbar-home");
 startMenu.addEventListener("click", () => {
-	OSPrograms.startmenu();
+	// OSPrograms.startmenu();
 });
