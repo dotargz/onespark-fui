@@ -1,7 +1,7 @@
 const OSFirmware = {
-	name: "OneSpark® Firmware",
+	name: "OneSpark® UI",
 	stage: "alpha",
-	version: "0.6.1",
+	version: "0.6.2",
 
 	// Utility functions
 	// Generate a random ID (used throughout the OS)
@@ -29,11 +29,10 @@ const OSFirmware = {
 		let FULLCMD = command.toLowerCase().trim();
 		let ARGS = FULLCMD.split(" ").filter((arg) => arg !== "");
 		let CMDNAME = ARGS.shift();
-
 		if (CMDNAME in OSPrograms) {
 			return OSPrograms[CMDNAME](ARGS);
 		} else {
-			return "Command not found.";
+			return `Command '${CMDNAME}' not found. Type 'help' for a list of commands.`;
 		}
 	},
 

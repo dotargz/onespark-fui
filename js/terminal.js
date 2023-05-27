@@ -10,19 +10,17 @@ class Terminal {
 
     // get commands from the OSPrograms object
 	run(command) {
-		let args = command.split(" ");
-		let commandName = args.shift().toLowerCase();
-        let output = "";
-		if (commandName in OSPrograms) {
-            output = OSPrograms[commandName](args);
-            if (output === undefined) {
-                output = "";
-            }
-            return output;
-        } else if (commandName === "help") {
+		command = command.toLowerCase().trim();
+		if (command == "help") {
 			return this.help();
+		} else if (command == "clear") {
+			this.clear();
+			return "";
+		} else if (command == "version") {
+			return this.version;
+		} else {
+			return OSFirmware.exec(command);
 		}
-        return "Command not found.";
 	}
 
 	help() {
@@ -47,5 +45,9 @@ class Terminal {
 				this.div.scrollTop = this.div.scrollHeight;
 			}
 		});
+	}
+
+	clear() {
+		this.div.innerHTML = this.starterText;
 	}
 }
