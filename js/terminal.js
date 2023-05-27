@@ -19,7 +19,7 @@ class Terminal {
 		} else if (command == "version") {
 			return this.version;
 		} else {
-			return OSFirmware.exec(command);
+			return OSFirmware.exec(command) || "";
 		}
 	}
 

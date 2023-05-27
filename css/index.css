@@ -5,14 +5,30 @@
 	font-family: "JetBrains Mono", monospace;
 	filter: grayscale(10%);
 
-    /* make everythign fade in and out */
-    animation: fadeIn 0.2s;
+	/* make everythign fade in and out */
+	animation: fadeIn 0.2s;
 }
 
 :root {
-	--window-color: #fff;
-	--window-background-color: #000;
-	--window-status-color: #fff;
+	--window-primary-color: #ffffff;
+	--window-secondary-color: #000000;
+
+	--window-background: rgba(0, 0, 0, 1);
+	--window-transparent: rgba(0, 0, 0, 0);
+
+	--window-error-color: #f00;
+	--window-warning-color: #ff0;
+	--window-success-color: #0f0;
+
+	/* experimental */
+	--desktop-background-image: url("/assets/img/bg.jpg");
+
+	/* not used */
+	--window-border-radius: 0rem;
+}
+
+html {
+	background-image: var(--desktop-background-image);
 }
 
 html,
@@ -22,8 +38,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: "JetBrains Mono", monospace;
-	color: var(--window-color);
-	background-color: var(--window-background-color);
+	color: var(--window-primary-color);
 
 	overflow: hidden;
 }
@@ -39,23 +54,22 @@ body {
 }
 
 ul {
-    list-style: square;
-    margin: 0;
-    margin-left: 1.5rem;
-    padding: 0;
+	list-style: square;
+	margin: 0;
+	padding: 0;
 }
 
 a {
-    display: inline-block;
-    color: var(--window-color);
+	display: inline-block;
+	color: var(--window-primary-color)
 }
 
 a:hover {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 header {
-	width: 100%;
+	width: max-content;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
@@ -63,6 +77,10 @@ header {
 	margin-bottom: 2rem;
 
 	user-select: none;
+
+	/* experimental */
+	background-color: var(--window-background);
+	margin-right: auto;
 }
 
 header > .logo {
@@ -72,11 +90,10 @@ header > .logo {
 	align-items: center;
 
 	/* design guide CRT */
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 
-	padding: 0.2rem;
-	margin-right: 2rem;
+	padding: 0.2rem 1rem;
 
 	cursor: pointer;
 }
@@ -98,19 +115,18 @@ header > .logo {
 	align-items: center;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 
-	padding: 0.2rem;
-	margin-right: 1rem;
+	padding: 0.2rem 1rem;
 }
 
 .nav > .nav-item:hover {
 	cursor: pointer;
 
 	/* design guide CRT */
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 
 	transition: 0.2s;
 }
@@ -133,16 +149,15 @@ header > .logo {
 	left: 0;
 	top: 100%;
 
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 	min-width: 160px;
-	z-index: 1;
 
 	/* design guide CRT */
-	border-top: var(--window-color) 4px solid;
-	border-bottom: var(--window-color) 4px solid;
-	border-left: var(--window-color) 2px solid;
-	border-right: var(--window-color) 2px solid;
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
 
 	margin: 0.2rem 0 0 0;
 }
@@ -151,14 +166,14 @@ header > .logo {
 .dropdown .dropdown-options a {
 	padding: 0.2rem;
 	text-decoration: none;
-	color: var(--window-color);
+	color: var(--window-primary-color);
 	display: block;
 }
 
 /* Change the background color of the options on hover */
 .dropdown .dropdown-options a:hover {
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 }
 
 .context-menu {
@@ -175,12 +190,12 @@ header > .logo {
 	align-items: flex-start;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
-	border-top: var(--window-color) 4px solid;
-	border-bottom: var(--window-color) 4px solid;
-	border-left: var(--window-color) 2px solid;
-	border-right: var(--window-color) 2px solid;
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
 }
 
 .context-menu > .context-menu-item {
@@ -192,8 +207,8 @@ header > .logo {
 	align-items: center;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 
 	padding: 0.2rem;
 	margin-right: 1rem;
@@ -203,8 +218,8 @@ header > .logo {
 	cursor: pointer;
 
 	/* design guide CRT */
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 
 	transition: 0.2s;
 }
@@ -230,12 +245,7 @@ footer {
 	align-items: center;
 	margin-top: 2rem;
 
-	/* design guide CRT */
-	border-top: #777 4px solid;
-	border-bottom: #777 4px solid;
-	border-left: #777 2px solid;
-	border-right: #777 2px solid;
-	padding: 0.5rem;
+	background-color: var(--window-transparent);
 
 	z-index: -100;
 
@@ -255,10 +265,10 @@ footer > .taskbar-item {
 	align-items: center;
 
 	/* design guide CRT */
-	border-top: var(--window-status-color) 4px solid;
-	border-bottom: var(--window-status-color) 4px solid;
-	border-left: var(--window-status-color) 2px solid;
-	border-right: var(--window-status-color) 2px solid;
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
 	padding: 0.2rem;
 	white-space: nowrap;
 }
@@ -267,17 +277,17 @@ footer > .taskbar-item:hover {
 	cursor: pointer;
 
 	/* design guide CRT */
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 
 	transition: 0.2s;
 }
 
 footer > .taskbar-item.minimized {
 	/* design guide CRT */
-	--window-status-color: #777;
+	--window-primary-color: #777;
 
-	color: var(--window-status-color);
+	color: var(--window-primary-color);
 
 	transition: 0.2s;
 }
@@ -286,16 +296,16 @@ footer > .taskbar-item.minimized:hover {
 	/* design guide CRT */
 	background-color: #777;
 
-	color: var(--window-background-color);
+	color: var(--window-secondary-color);
 
 	transition: 0.2s;
 }
 
 footer > .taskbar-item.important {
 	/* design guide CRT */
-	--window-status-color: #ff0;
+	--window-primary-color: var(--window-warning-color);
 
-	color: var(--window-status-color);
+	color: var(--window-primary-color);
 
 	transition: 0.2s;
 
@@ -305,9 +315,9 @@ footer > .taskbar-item.important {
 
 footer > .taskbar-item.error {
 	/* design guide CRT */
-	--window-status-color: #f00;
+	--window-primary-color: var(--window-error-color);
 
-	color: var(--window-status-color);
+	color: var(--window-primary-color);
 
 	transition: 0.2s;
 
@@ -317,51 +327,51 @@ footer > .taskbar-item.error {
 
 @keyframes strobe {
 	0% {
-		border-top: var(--window-status-color) 4px solid;
-        border-bottom: var(--window-status-color) 4px solid;
-        border-left: var(--window-status-color) 2px solid;
-        border-right: var(--window-status-color) 2px solid;
+		border-top: var(--window-primary-color) 4px solid;
+		border-bottom: var(--window-primary-color) 4px solid;
+		border-left: var(--window-primary-color) 2px solid;
+		border-right: var(--window-primary-color) 2px solid;
 	}
 	50% {
 		border-top: #fff 4px solid;
-        border-bottom: #fff 4px solid;
-        border-left: #fff 2px solid;
-        border-right: #fff 2px solid;
+		border-bottom: #fff 4px solid;
+		border-left: #fff 2px solid;
+		border-right: #fff 2px solid;
 
-        color: #fff;
+		color: #fff;
 	}
 	100% {
-		border-top: var(--window-status-color) 4px solid;
-        border-bottom: var(--window-status-color) 4px solid;
-        border-left: var(--window-status-color) 2px solid;
-        border-right: var(--window-status-color) 2px solid;
+		border-top: var(--window-primary-color) 4px solid;
+		border-bottom: var(--window-primary-color) 4px solid;
+		border-left: var(--window-primary-color) 2px solid;
+		border-right: var(--window-primary-color) 2px solid;
 	}
 }
 
-footer > .taskbar-item.important:hover, footer > .taskbar-item.error:hover {
+footer > .taskbar-item.important:hover,
+footer > .taskbar-item.error:hover {
 	/* do not strobe on hover */
-    animation: none;
+	animation: none;
 
-    /* design guide CRT */
-    background-color: var(--window-status-color);
-    color: var(--window-background-color);
-
+	/* design guide CRT */
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 }
 
 @keyframes fadeOut {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 @keyframes fadeIn {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }

@@ -47,3 +47,10 @@
 	<li>fatal error screen now goes away on refresh</li>
 	<li>refactored the some code</li>
 </ul>
+<p class="ui-window-text">0.7.0: Chores 2:</p>
+<ul class="ui-window-text">
+	<li>refactored a lot of css code</li>
+	<li>refreshed the ui a bit</li>
+	<li>added support for theming in the future</li>
+	<li>refactored the some code</li>
+</ul>

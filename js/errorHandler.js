@@ -29,6 +29,7 @@ window.addEventListener("error", (e) => {
 			window.location.reload();
 		});
 	} catch (ee) {
+		// set html to fatal error
 		document.body.innerHTML = `<iframe src="fatalerror.html?filename=${ee.filename}&message=${ee.message}&lineno=${ee.lineno}&colno=${ee.colno}&errorcode=${"0x" + genRanHex(8)}" style="width: 100%; height: 100%; border: none;"></iframe>`;
 	}
 });

@@ -10,14 +10,14 @@ div.ui-window-draggable {
 	justify-content: flex-start;
 	align-items: center;
 
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 
 	/* design guide CRT */
-	border-top: var(--window-color) 4px solid;
-	border-bottom: var(--window-color) 4px solid;
-	border-left: var(--window-color) 2px solid;
-	border-right: var(--window-color) 2px solid;
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
 
 	overflow: hidden;
 }
@@ -34,14 +34,14 @@ div.ui-window-draggable.important {
 	z-index: 1000;
 
 	/* design guide CRT dark yellow */
-	--window-color: #ff0;
+	--window-primary-color: var(--window-warning-color);
 }
 
 div.ui-window-draggable.error {
 	z-index: 2000;
 
 	/* design guide CRT dark yellow */
-	--window-color: #f00;
+	--window-primary-color: var(--window-error-color);
 }
 
 div.ui-window-draggable > .ui-window-titlebar {
@@ -52,11 +52,11 @@ div.ui-window-draggable > .ui-window-titlebar {
 	justify-content: flex-end;
 	align-items: center;
 
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 
 	/* design guide CRT */
-	border-bottom: var(--window-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
 	padding-left: 0.5rem;
 
 	cursor: move;
@@ -94,8 +94,8 @@ div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
 	align-items: center;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 
 	border: none;
 	outline: none;
@@ -105,8 +105,8 @@ div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
 	cursor: pointer;
 
 	/* design guide CRT */
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 
 	transition: 0.2s;
 }
@@ -169,8 +169,8 @@ p {
 	align-items: flex-start;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-background);
+	color: var(--window-primary-color);
 	font-family: "JetBrains Mono", monospace;
 	font-size: 1rem;
 
@@ -212,19 +212,17 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	width: max-content;
 	height: max-content;
 
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-primary-color);
+	color: var(--window-secondary-color);
 	font-weight: bolder;
 
 	text-transform: uppercase;
 
 	/* design guide CRT */
-	border-top: var(--window-color) 4px solid;
-	border-bottom: var(--window-color) 4px solid;
-	border-left: var(--window-color) 2px solid;
-	border-right: var(--window-color) 2px solid;
-	background-color: var(--window-color);
-	color: var(--window-background-color);
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
 
 	padding: 0.2rem 0.5rem;
 	flex: 1;
@@ -234,8 +232,8 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	cursor: pointer;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-secondary-color);
+	color: var(--window-primary-color);
 
 	transition: 0.2s;
 }
@@ -248,13 +246,15 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	justify-content: flex-start;
 	align-items: center;
 
+	background-color: var(--window-secondary-color);
+	color: var(--window-primary-color);
+
 	/* design guide CRT */
-	border-top: var(--window-color) 4px solid;
-	border-bottom: var(--window-color) 4px solid;
-	border-left: var(--window-color) 2px solid;
-	border-right: var(--window-color) 2px solid;
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	border-top: var(--window-primary-color) 4px solid;
+	border-bottom: var(--window-primary-color) 4px solid;
+	border-left: var(--window-primary-color) 2px solid;
+	border-right: var(--window-primary-color) 2px solid;
+
 	text-transform: uppercase;
 	font-family: "JetBrains Mono", monospace;
 
@@ -262,6 +262,11 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	margin: 0;
 	outline: none;
 	font-size: 1rem;
+}
+
+::placeholder {
+	color: var(--window-primary-color);
+	opacity: 0.5;
 }
 
 .ui-window-input:hover {
@@ -272,6 +277,7 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	border: none;
 	padding: none;
 	padding-left: 0.5rem;
+	background-color: var(--window-transparent);
 }
 
 .ui-window-terminal-output {
@@ -283,8 +289,8 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	align-items: flex-start;
 
 	/* design guide CRT */
-	background-color: var(--window-background-color);
-	color: var(--window-color);
+	background-color: var(--window-transparent);
+	color: var(--window-primary-color);
 	font-size: 1rem;
 
 	border: none;
@@ -306,7 +312,7 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 
 .ui-window-group.terminal {
 	margin-top: auto;
-	color: #ffffff;
+	color: var(--window-primary-color);
 }
 
 .ui-window-jsdos-wrapper {

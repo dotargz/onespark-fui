@@ -70,12 +70,12 @@ const OSPrograms = {
 			_id,
 			"Changelog",
 			`
-            <p class="ui-window-text">0.6.0: Chores:</p>
+            <p class="ui-window-text">0.7.0: Chores 2:</p>
 			<ul class="ui-window-text">
-				<li>removed the gui launcher for a run prompt</li>
-				<li>added the 'terminal' program</li>
-				<li>fatal error screen now goes away on refresh</li>
-				<li>refactored the some code</li>
+				<li>- refactored a lot of css code</li>
+				<li>- refreshed the ui a bit</li>
+				<li>- added support for theming in the future</li>
+				<li>- refactored some code</li>
 			</ul>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
@@ -228,7 +228,7 @@ const OSPrograms = {
 			_id,
 			"run program",
 			`
-            <input class="ui-window-input" type="text" placeholder="type here..." data-window="${_id}">
+            <input class="ui-window-input" type="text" placeholder="program name" data-window="${_id}">
 			<div class="ui-window-buttons">
 			<button class="ui-window-button" data-window="${_id}">run</button> <button class="ui-window-button" data-window="${_id}">cancel</button>
 			</div>
