@@ -70,12 +70,12 @@ const OSPrograms = {
 			_id,
 			"Changelog",
 			`
-            <p class="ui-window-text">0.5.0: DOS revolution:</p>
+            <p class="ui-window-text">0.6.0: Chores:</p>
 			<ul class="ui-window-text">
-				<li>added the abliity to run any DOS program easily</li>
-				<li>fixed DOOM not working on certain networks</li>
-				<li>fixed fatal error from internal firefox issue</li>
-				<li>refactored the boot code</li>
+				<li>removed the gui launcher for a run prompt</li>
+				<li>added the 'terminal' program</li>
+				<li>fatal error screen now goes away on refresh</li>
+				<li>refactored the some code</li>
 			</ul>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
@@ -100,15 +100,14 @@ const OSPrograms = {
 		this.debug.self = new OSWindow(
 			_id,
 			"Debug Options",
-			`<div class="ui-window-buttons grow">
-                <button class="ui-window-button throw-error-button" data-window="${_id}">Throw Error</button>
-                <button class="ui-window-button throw-long-error-button" data-window="${_id}">Throw Long Error</button>
-                <button class="ui-window-button close-all-button" data-window="${_id}">Close All Windows</button>
-                <button class="ui-window-button relaunch-button" data-window="${_id}">Relaunch OS</button>
-            </div>
+			`<p class="ui-window-text">This is the debug options window. You can use this to test the OS.</p>
+			<div class="ui-window-buttons"><button class="ui-window-button throw-error-button" data-window="${_id}">throw error</button>
+			<button class="ui-window-button throw-long-error-button" data-window="${_id}">throw long error</button></div>
+			<div class="ui-window-buttons"><button class="ui-window-button close-all-button" data-window="${_id}">close all windows</button>
+			<button class="ui-window-button relaunch-button" data-window="${_id}">relaunch</button></div>
             <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">close</button></div>`,
 			375,
-			150,
+			190,
 			2,
 			(error = false),
 			(important = false),

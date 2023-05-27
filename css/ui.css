@@ -183,7 +183,7 @@ p {
 	resize: none;
 }
 
-div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
+div.ui-window-draggable > .ui-window-content > .ui-window-buttons:last-child {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
@@ -210,7 +210,7 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
 	justify-content: center;
 	align-items: center;
 	width: max-content;
-	height: 2rem;
+	height: max-content;
 
 	background-color: var(--window-background-color);
 	color: var(--window-color);
@@ -226,6 +226,7 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
 	background-color: var(--window-color);
 	color: var(--window-background-color);
 
+	padding: 0.2rem 0.5rem;
 	flex: 1;
 }
 

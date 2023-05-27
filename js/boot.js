@@ -1,7 +1,7 @@
 const OSFirmware = {
 	name: "OneSpark® Firmware",
 	stage: "alpha",
-	version: "0.6.0",
+	version: "0.6.1",
 
 	// Utility functions
 	// Generate a random ID (used throughout the OS)
