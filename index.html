@@ -32,8 +32,8 @@
 						<a href="#">new file</a>
 						<a href="#">open file</a>
 						<a href="#" onclick="OSPrograms.launcher()">run program</a>
-						<a href="#" onclick="OSFunctions.clearStorage()">clear storage</a>
-						<a href="#" onclick="OSFunctions.exit()">exit</a>
+						<a href="#" onclick="OSPrograms.clearstorage()">clear storage</a>
+						<a href="#" onclick="OSPrograms.exit()">exit</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="edit-dropdown">
@@ -43,22 +43,22 @@
 						<a href="#">redo</a>
 						<a href="#">cut</a>
 						<a href="#" onclick="OSFunctions.copy()">copy</a>
-                        <a href="#" onclick="OSFunctions.paste()">paste</a>
+						<a href="#" onclick="OSFunctions.paste()">paste</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="view-dropdown">
 					view
 					<div class="dropdown-options">
-						<a href="#" onclick="OSFunctions.minimizeAll()">hide windows</a>
-						<a href="#" onclick="OSFunctions.unMinimizeAll()">show windows</a>
+						<a href="#" onclick="OSFunctions.minimizeall()">hide windows</a>
+						<a href="#" onclick="OSFunctions.unminimizeall()">show windows</a>
 					</div>
 				</span>
 				<span class="nav-item dropdown" id="help-dropdown">
 					help
 					<div class="dropdown-options">
-						<a href="#" onclick="OSPrograms.howTo()">how-to</a>
+						<a href="#" onclick="OSPrograms.howto()">how-to</a>
 						<a href="#" onclick="OSPrograms.changelog()">changelog</a>
-                        <a href="#" onclick="OSPrograms.about()">about</a>
+						<a href="#" onclick="OSPrograms.about()">about</a>
 						<a href="https://github.com/dotargz/onespark-fui">source code</a>
 					</div>
 				</span>
@@ -67,7 +67,7 @@
 		<main>
 			<!--
                 We use javascript to create the workspace.
-                This is because we want to be able to 
+                This is because we want to be able to
                 create windows dynamically.
             -->
 		</main>
@@ -76,24 +76,25 @@
 				<span class="taskbar-item-icon material-symbols-sharp">menu</span>
 			</div>
 
-			<!-- 
+			<!--
                 We use javascript to create the taskbar.
-                This is because we want to be able to 
+                This is because we want to be able to
                 create windows dynamically.
             -->
 		</footer>
 		<div id="contextMenu" class="context-menu">
-            <div class="context-menu-item" onclick="OSFunctions.copy()">copy</div>
-            <div class="context-menu-item" onclick="OSFunctions.paste()">paste</div>
+			<div class="context-menu-item" onclick="OSFunctions.copy()">copy</div>
+			<div class="context-menu-item" onclick="OSFunctions.paste()">paste</div>
 			<div class="context-menu-item" onclick="OSPrograms.launcher()">run program</div>
 			<div class="context-menu-item" onclick="OSFunctions.clearStorage()">clear storage</div>
-			<div class="context-menu-item" onclick="OSFunctions.minimizeAll()">hide windows</div>
-			<div class="context-menu-item" onclick="OSFunctions.unMinimizeAll()">show windows</div>
+			<div class="context-menu-item" onclick="OSFunctions.minimizeall()">hide windows</div>
+			<div class="context-menu-item" onclick="OSFunctions.unminimizeall()">show windows</div>
 		</div>
 		<script src="/js/window.js"></script>
-        <script src="/js/errorHandler.js"></script>
+		<script src="/js/errorHandler.js"></script>
 		<script src="/js/dropdown.js"></script>
 		<script src="/js/taskbar.js"></script>
+		<script src="/js/terminal.js"></script>
 		<script src="/js/programs.js"></script>
 		<script src="/js/boot.js"></script>
 	</body>

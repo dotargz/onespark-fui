@@ -40,3 +40,10 @@
 	<li>fixed fatal error from internal firefox issue</li>
 	<li>refactored the boot code</li>
 </ul>
+<p class="ui-window-text">0.6.0: Chores:</p>
+<ul class="ui-window-text">
+	<li>removed the gui launcher for a run prompt</li>
+	<li>added the 'terminal' program</li>
+	<li>fatal error screen now goes away on refresh</li>
+	<li>refactored the some code</li>
+</ul>

@@ -205,6 +205,11 @@ class OSWindow {
 		this.window.style.height = "85vh";
 		this.window.style.left = "50%";
 		this.window.style.top = "50%";
+		this.window.style.transform = "translate(-50%, -50%)";
+		// update the window's x and y position (left and top)
+		this.x = this.window.offsetLeft;
+		this.y = this.window.offsetTop;
+
 		document.dispatchEvent(new CustomEvent("OSWindowMaximized", { detail: this }));
 
 		if (!this.resizeable || this.important || this.error) {
@@ -305,20 +310,28 @@ class OSWindow {
 		function elementDrag(e) {
 			e.preventDefault();
 
+			const windowID = element.getAttribute("data-window");
+			const window = OSWindow.getWindowById(windowID);
+
+			if (window.maximized) {
+				window.unmaximize();
+
+				// move the window to the mouse's position
+				element.style.left = e.clientX + "px";
+				element.style.top = e.clientY + "px";
+			}
+
 			currentPosX = previousPosX - e.clientX;
 			currentPosY = previousPosY - e.clientY;
 
 			previousPosX = e.clientX;
 			previousPosY = e.clientY;
 
+			window.x = element.offsetLeft - currentPosX;
+			window.y = element.offsetTop - currentPosY;
+
 			element.style.top = element.offsetTop - currentPosY + "px";
 			element.style.left = element.offsetLeft - currentPosX + "px";
-
-			// update the window's position
-			const windowID = element.getAttribute("data-window");
-			const window = OSWindow.getWindowById(windowID);
-			window.x = element.offsetTop - currentPosY;
-			window.y = element.offsetLeft - currentPosX;
 		}
 
 		function closeDragElement() {

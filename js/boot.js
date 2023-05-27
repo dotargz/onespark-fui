@@ -1,17 +1,17 @@
-const OSFirmware  = {
-	name: "OneSpark UI",
+const OSFirmware = {
+	name: "OneSpark® Firmware",
 	stage: "alpha",
-	version: "0.5.0",
+	version: "0.6.0",
 
 	// Utility functions
 	// Generate a random ID (used throughout the OS)
-	randomId() {
+	randomid() {
 		const uint32 = window.crypto.getRandomValues(new Uint32Array(1))[0];
 		return uint32.toString(16);
 	},
 
 	// Get the current date+time
-	getTime() {
+	gettime() {
 		let date = new Date();
 		let hours = date.getHours();
 		let minutes = date.getMinutes();
@@ -25,15 +25,27 @@ const OSFirmware  = {
 		return strTime;
 	},
 
+	exec(command) {
+		let FULLCMD = command.toLowerCase().trim();
+		let ARGS = FULLCMD.split(" ").filter((arg) => arg !== "");
+		let CMDNAME = ARGS.shift();
+
+		if (CMDNAME in OSPrograms) {
+			return OSPrograms[CMDNAME](ARGS);
+		} else {
+			return "Command not found.";
+		}
+	},
+
 	onStart() {
 		try {
 			// update the title(s)
-			document.title = `${OSFirmware.name} ~ ${OSFirmware.stage} ${OSFirmware.version}`.toUpperCase();
-			document.getElementById("main-logo").innerHTML = `${OSFirmware.name} ~ ${OSFirmware.stage} ${OSFirmware.version}`.toUpperCase();
+			document.title = `${OSFirmware.name} ~ ${OSFirmware.stage} v${OSFirmware.version}`.toUpperCase();
+			document.getElementById("main-logo").innerHTML = `${OSFirmware.name} ~ ${OSFirmware.stage} v${OSFirmware.version}`.toUpperCase();
 			OSPrograms.welcome();
 		} catch (e) {
 			console.error(e);
-			let _id = this.randomId();
+			let _id = this.randomid();
 			new OSWindow(
 				_id,
 				"Error",
@@ -54,6 +66,6 @@ const OSFirmware  = {
 			);
 		}
 	},
-}
+};
 
 document.addEventListener("DOMContentLoaded", OSFirmware.onStart);

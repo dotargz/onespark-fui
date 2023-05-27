@@ -75,7 +75,7 @@ div.ui-window-draggable > .ui-window-titlebar > .ui-window-title {
 div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
 	width: 20%;
 	min-width: 5rem;
-    height: 100%;
+	height: 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-end;
@@ -87,19 +87,18 @@ div.ui-window-draggable > .ui-window-titlebar > .ui-window-controls {
 }
 
 .ui-window-controls > .ui-window-control {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 
-    /* design guide CRT */
-    background-color: var(--window-background-color);
-    color: var(--window-color);
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
 
-    border: none;
-    outline: none;
-
+	border: none;
+	outline: none;
 }
 
 .ui-window-control:hover {
@@ -128,20 +127,20 @@ div.ui-window-draggable > .ui-window-content {
 }
 
 .ui-window-content > div.ui-window-row {
-    width: 100%;
-    height: max-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+	width: 100%;
+	height: max-content;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: flex-start;
 
-    /* padding: 0.5rem; */
+	/* padding: 0.5rem; */
 
-    gap: 1rem;
+	gap: 1rem;
 
-    flex-wrap: wrap;
+	flex-wrap: wrap;
 
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .ui-window-content > p.ui-window-text {
@@ -156,11 +155,12 @@ div.ui-window-draggable > .ui-window-content {
 }
 
 p {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
-.ui-window-content > .ui-window-textarea, .ui-window-content > .ui-window-iframe {
+.ui-window-content > .ui-window-textarea,
+.ui-window-content > .ui-window-iframe {
 	width: 100%;
 	height: 100%;
 	display: flex;
@@ -193,15 +193,24 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
 	margin-top: auto;
 }
 
+.ui-window-buttons {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	height: max-content;
+	flex-wrap: wrap;
+	gap: 0.5rem 0.5rem;
+}
+
 .ui-window-button {
-	width: 10rem;
-	height: 2rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
-
-	margin-right: 0.5rem;
+	width: max-content;
+	height: 2rem;
 
 	background-color: var(--window-background-color);
 	color: var(--window-color);
@@ -216,6 +225,8 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
 	border-right: var(--window-color) 2px solid;
 	background-color: var(--window-color);
 	color: var(--window-background-color);
+
+	flex: 1;
 }
 
 .ui-window-button:hover {
@@ -228,19 +239,83 @@ div.ui-window-draggable > .ui-window-content > .ui-window-buttons {
 	transition: 0.2s;
 }
 
+.ui-window-input {
+	width: 100%;
+	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 
+	/* design guide CRT */
+	border-top: var(--window-color) 4px solid;
+	border-bottom: var(--window-color) 4px solid;
+	border-left: var(--window-color) 2px solid;
+	border-right: var(--window-color) 2px solid;
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+	text-transform: uppercase;
+	font-family: "JetBrains Mono", monospace;
+
+	padding: 0.2rem;
+	margin: 0;
+	outline: none;
+	font-size: 1rem;
+}
+
+.ui-window-input:hover {
+	cursor: text;
+}
+
+.ui-window-input.terminal {
+	border: none;
+	padding: none;
+	padding-left: 0.5rem;
+}
+
+.ui-window-terminal-output {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+
+	/* design guide CRT */
+	background-color: var(--window-background-color);
+	color: var(--window-color);
+	font-size: 1rem;
+
+	border: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	resize: none;
+	overflow-y: scroll;
+}
+
+.ui-window-group {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+	height: max-content;
+}
+
+.ui-window-group.terminal {
+	margin-top: auto;
+	color: #ffffff;
+}
 
 .ui-window-jsdos-wrapper {
-    width: 100%;
-    height: 100%;
-    position: relative;
+	width: 100%;
+	height: 100%;
+	position: relative;
 }
 
 .jsdos-iframe {
-    position: absolute;
-    top: 0;
-    left: -35px;
-
+	position: absolute;
+	top: 0;
+	left: -35px;
 }
-
-

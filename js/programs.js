@@ -1,7 +1,8 @@
+// a program is a function that creates a new window
 const OSPrograms = {
 	welcome: function (x = 0, y = 0) {
 		// create a new window with the new OSWindow class
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		this.welcome.self = new OSWindow(
 			_id,
 			"welcome!",
@@ -28,9 +29,9 @@ const OSPrograms = {
 		});
 	},
 
-	howTo: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
-		this.howTo.self = new OSWindow(
+	howto: function (x = 0, y = 0) {
+		let _id = OSFirmware.randomid();
+		this.howto.self = new OSWindow(
 			_id,
 			"How-To Manual",
 			`<p class="ui-window-text">
@@ -58,13 +59,13 @@ const OSPrograms = {
 			(y = y)
 		);
 
-		this.howTo.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
+		this.howto.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
 			OSWindow.destroyWindowById(_id);
 		});
 	},
 
 	changelog: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		this.changelog.self = new OSWindow(
 			_id,
 			"Changelog",
@@ -95,11 +96,11 @@ const OSPrograms = {
 	},
 
 	debug: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		this.debug.self = new OSWindow(
 			_id,
 			"Debug Options",
-			`<div class="ui-window-row">
+			`<div class="ui-window-buttons grow">
                 <button class="ui-window-button throw-error-button" data-window="${_id}">Throw Error</button>
                 <button class="ui-window-button throw-long-error-button" data-window="${_id}">Throw Long Error</button>
                 <button class="ui-window-button close-all-button" data-window="${_id}">Close All Windows</button>
@@ -140,12 +141,12 @@ const OSPrograms = {
 	},
 
 	about: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		this.about.self = new OSWindow(
 			_id,
 			"About",
 			`<p class="ui-window-text">
-            This is a browser-based OS made by <a href="blueskye.dev">Blueskye</a>.
+            This is a browser-based OS made by <a href="https://blueskye.dev">Blueskye</a>.
             Copyright (C) 2023  BlueSkye
             </p>
             <p class="ui-window-text">
@@ -184,19 +185,19 @@ const OSPrograms = {
 		});
 	},
 
-	textEditor: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
-		this.textEditor.self = new OSWindow(_id, "text editor", `<textarea class="ui-window-textarea" data-window="${_id}" placeholder="TYPE HERE..."></textarea>`, 300, 210, 2, (error = false), (important = false), (iscentered = true), (padding = true), (resizeable = true), (x = x), (y = y));
+	texteditor: function (x = 0, y = 0) {
+		let _id = OSFirmware.randomid();
+		this.texteditor.self = new OSWindow(_id, "text editor", `<textarea class="ui-window-textarea" data-window="${_id}" placeholder="TYPE HERE..."></textarea>`, 300, 210, 2, (error = false), (important = false), (iscentered = false), (padding = true), (resizeable = true), (x = x), (y = y));
 
-		this.textEditor.self.window.querySelector(".ui-window-textarea").addEventListener("input", () => {
-			localStorage.setItem("textEditor-" + _id, this.textEditor.self.window.querySelector(".ui-window-textarea").value);
+		this.texteditor.self.window.querySelector(".ui-window-textarea").addEventListener("input", () => {
+			localStorage.setItem("textEditor-" + _id, this.texteditor.self.window.querySelector(".ui-window-textarea").value);
 		});
 
-		this.textEditor.self.window.querySelector(".ui-window-textarea").value = localStorage.getItem("textEditor");
+		this.texteditor.self.window.querySelector(".ui-window-textarea").value = localStorage.getItem("textEditor");
 	},
 
 	doom: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 
 		// bugfix
 		localStorage.setItem("emulators.ui.ui.tipsV2", "false");
@@ -223,20 +224,18 @@ const OSPrograms = {
 	},
 
 	launcher: function (x = 0, y = 0) {
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		this.launcher.self = new OSWindow(
 			_id,
 			"run program",
 			`
-            <div class="ui-window-row">
-            <p class="ui-window-text">welcome! <button class="ui-window-button launch-welcome">launch</button></p>
-            <p class="ui-window-text">doom: 1993<button class="ui-window-button launch-doom">launch</button></p>
-            <p class="ui-window-text">text editor <button class="ui-window-button launch-txt">launch</button></p>
-            <p class="ui-window-text">debug <button class="ui-window-button launch-debug">launch</button></p>
-            </div>
+            <input class="ui-window-input" type="text" placeholder="type here..." data-window="${_id}">
+			<div class="ui-window-buttons">
+			<button class="ui-window-button" data-window="${_id}">run</button> <button class="ui-window-button" data-window="${_id}">cancel</button>
+			</div>
             `,
 			375,
-			150,
+			95,
 			2,
 			(error = false),
 			(important = false),
@@ -247,29 +246,71 @@ const OSPrograms = {
 			(y = y)
 		);
 
-		this.launcher.self.window.querySelector(".launch-welcome").addEventListener("click", () => {
-			OSPrograms.welcome();
+		this.launcher.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
+			let _input = this.launcher.self.window.querySelector(".ui-window-input").value.toLowerCase().trim();
+			OSFirmware.exec(_input);
+			OSWindow.destroyWindowById(_id);
 		});
 
-		this.launcher.self.window.querySelector(".launch-doom").addEventListener("click", () => {
-			OSPrograms.doom();
-		});
-
-		this.launcher.self.window.querySelector(".launch-txt").addEventListener("click", () => {
-			OSPrograms.textEditor();
-		});
-
-		this.launcher.self.window.querySelector(".launch-debug").addEventListener("click", () => {
-			OSPrograms.debug();
+		this.launcher.self.window.querySelector(".ui-window-button:last-child").addEventListener("click", () => {
+			OSWindow.destroyWindowById(_id);
 		});
 	},
-};
 
-const OSFunctions = {
-	clearStorage: function () {
+	terminal: function (x = 0, y = 0) {
+		let _id = OSFirmware.randomid();
+		this.terminal.self = new OSWindow(_id, "terminal", `<div class="ui-window-terminal-output" data-window="${_id}"></div><div class="ui-window-group terminal">~$ <input type="text" class="ui-window-input terminal" data-window="${_id}" placeholder=""></div>`, 400, 210, 2, (error = false), (important = false), (iscentered = false), (padding = true), (resizeable = true), (x = x), (y = y));
+
+		// create a new terminal
+		// constructor Terminal(outputdiv: any, inputdiv: any, version: any): Terminal
+		this.terminal.self.terminal = new Terminal(_id, this.terminal.self.window.querySelector(".ui-window-terminal-output"), this.terminal.self.window.querySelector(".ui-window-input"), "1.0.0");
+		this.terminal.self.terminal.init();
+	},
+
+	// TODO: MOVE TO OSFIRMWARE WHIST STILL KEEPING SIMPLE USE
+	fw: function (cmd) {
+		if (cmd == "" || cmd == "version" || cmd == "name" || cmd == undefined) {
+			return OSFirmware.name + " [" + OSFirmware.version + "]";
+		} else if (cmd == "help") {
+			let _help = "";
+			for (let i in OSFirmware) {
+				if (typeof OSFirmware[i] == "function") {
+					_help += i + " ";
+				}
+			}
+			return _help;
+		}
+		try {
+			return OSFirmware[cmd]();
+		} catch (e) {
+			return "Procedure '" + cmd + "' not found";
+		}
+	},
+
+	// TODO: MOVE TO OSFIRMWARE WHIST STILL KEEPING SIMPLE USE
+	fn: function (cmd) {
+		if (cmd == "" || cmd == "version" || cmd == "name" || cmd == undefined) {
+			return OSFunctions.name + " [" + OSFunctions.version + "]";
+		} else if (cmd == "help") {
+			let _help = "";
+			for (let i in OSFunctions) {
+				if (typeof OSFunctions[i] == "function") {
+					_help += i + " ";
+				}
+			}
+			return _help;
+		}
+		try {
+			return OSFunctions[cmd]();
+		} catch (e) {
+			return "Function '" + cmd + "' not found";
+		}
+	},
+
+	clearstorage: function (x = 0, y = 0) {
 		// prompt the user to confirm that they want to clear the localStorage using an OSWindow
-		let _id = OSFirmware.randomId();
-		this.clearStorage.self = new OSWindow(
+		let _id = OSFirmware.randomid();
+		this.clearstorage.self = new OSWindow(
 			_id,
 			"clear storage",
 			`<p class="ui-window-text">Are you sure you want to clear the localStorage?</p>
@@ -284,17 +325,54 @@ const OSFunctions = {
 		);
 
 		// close the window when the okay button is clicked (use the data-window attribute to get the window id) use destroyWindowWithId(id) to destroy the window
-		this.clearStorage.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
+		this.clearstorage.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
 			OSWindow.destroyWindowById(_id);
-			localStorage.clear();
-			window.location.reload();
+			OSFunctions.clearstorage();
 		});
-		this.clearStorage.self.window.querySelector(".ui-window-button:nth-child(2)").addEventListener("click", () => {
+		this.clearstorage.self.window.querySelector(".ui-window-button:nth-child(2)").addEventListener("click", () => {
 			OSWindow.destroyWindowById(_id);
 		});
 	},
 
-	minimizeAll: function () {
+	exit: function (x = 0, y = 0) {
+		// prompt the user to confirm that they want to clear the localStorage using an OSWindow
+		let _id = OSFirmware.randomid();
+		this.exit.self = new OSWindow(
+			_id,
+			"exit",
+			`<p class="ui-window-text">Are you sure you want to exit? All unsaved data will be lost.</p>
+            <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">yes</button><button class="ui-window-button" data-window="${_id}">no</button></div>`,
+			300,
+			100,
+			2,
+			(error = false),
+			(important = true),
+			(iscentered = true),
+			(padding = true)
+		);
+
+		// close the window when the okay button is clicked (use the data-window attribute to get the window id) use destroyWindowWithId(id) to destroy the window
+		this.exit.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
+			OSWindow.destroyWindowById(_id);
+			OSFunctions.exit();
+		});
+		this.exit.self.window.querySelector(".ui-window-button:nth-child(2)").addEventListener("click", () => {
+			OSWindow.destroyWindowById(_id);
+		});
+	},
+};
+
+// a function is a procedure that returns a value, and usually does not open a window
+const OSFunctions = {
+	name: "OneSpark® Standard Library",
+	version: "0.2.0",
+
+	clearstorage: function () {
+		localStorage.clear();
+		window.location.reload();
+	},
+
+	minimizeall: function () {
 		for (let window of OSWindow.windows) {
 			// important windows can't be minimized
 			if (window.important) continue;
@@ -302,7 +380,7 @@ const OSFunctions = {
 		}
 	},
 
-	unMinimizeAll: function () {
+	unminimizeall: function () {
 		for (let window of OSWindow.windows) {
 			// important windows can't be minimized
 			if (window.important) continue;
@@ -331,35 +409,12 @@ const OSFunctions = {
 	},
 
 	exit: function () {
-		// prompt the user to confirm that they want to clear the localStorage using an OSWindow
-		let _id = OSFirmware.randomId();
-		this.exit.self = new OSWindow(
-			_id,
-			"exit",
-			`<p class="ui-window-text">Are you sure you want to exit? All unsaved data will be lost.</p>
-            <div class="ui-window-buttons"><button class="ui-window-button" data-window="${_id}">yes</button><button class="ui-window-button" data-window="${_id}">no</button></div>`,
-			300,
-			100,
-			2,
-			(error = false),
-			(important = true),
-			(iscentered = true),
-			(padding = true)
-		);
-
-		// close the window when the okay button is clicked (use the data-window attribute to get the window id) use destroyWindowWithId(id) to destroy the window
-		this.exit.self.window.querySelector(".ui-window-button").addEventListener("click", () => {
-			OSWindow.destroyWindowById(_id);
-			// animate fade out the html element (only play once)
-			document.querySelector("body").style.animation = "fadeOut 0.75s normal forwards ease-in-out";
-			// reload the page after 5 seconds
-			setTimeout(() => {
-				// reload the page
-				window.location.reload();
-			}, 5000);
-		});
-		this.exit.self.window.querySelector(".ui-window-button:nth-child(2)").addEventListener("click", () => {
-			OSWindow.destroyWindowById(_id);
-		});
+		// animate fade out the html element (only play once)
+		document.querySelector("body").style.animation = "fadeOut 0.75s normal forwards ease-in-out";
+		// reload the page after 5 seconds
+		setTimeout(() => {
+			// reload the page
+			window.location.reload();
+		}, 5000);
 	},
 };

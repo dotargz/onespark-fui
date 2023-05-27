@@ -4,7 +4,7 @@ window.addEventListener("error", (e) => {
 	try {
 		// if file doesnt end with .js, then ignore
 		if (!e.filename.endsWith(".js")) return;
-		let _id = OSFirmware.randomId();
+		let _id = OSFirmware.randomid();
 		new OSWindow(
 			_id,
 			"Error",
@@ -29,6 +29,6 @@ window.addEventListener("error", (e) => {
 			window.location.reload();
 		});
 	} catch (ee) {
-		window.location.href = `fatalerror.html?filename=${ee.filename}&message=${ee.message}&lineno=${ee.lineno}&colno=${ee.colno}&errorcode=${"0x" + genRanHex(8)}`;
+		document.body.innerHTML = `<iframe src="fatalerror.html?filename=${ee.filename}&message=${ee.message}&lineno=${ee.lineno}&colno=${ee.colno}&errorcode=${"0x" + genRanHex(8)}" style="width: 100%; height: 100%; border: none;"></iframe>`;
 	}
 });
